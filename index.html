@@ -1,22 +1,23 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Anilist-IL - דף הבית</title>
-</head>
-<body>
+<!DOCTYPE html> 
+<html lang="he" dir="rtl"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="styles.css"> 
+    <title>Anilist-IL - דף הבית</title> 
+    </head>
+<!-- הגדרות האתר -->
 
-    <header>
-        <div>
-            <strong>Anilist-IL</strong>
-        </div>
+<body> 
+    <header> 
+        <div> 
+            <strong>Anilist-IL</strong> 
+            </div>
 
-        <nav>
-            <h3>תפריט ניווט</h3>
-            <ul>
-                <li><a href="index.html">דף הבית</a></li>
+        <nav> 
+            <h3>תפריט ניווט</h3> 
+            <ul> 
+                <li><a href="index.html">דף הבית</a></li> 
                 <li><a href="full-catalog.html">קטלוג הסדרות המלא</a></li>
                 <li><a href="add-anime.html">הוסף סדרה</a></li>
                 <li><a href="profile.html">הפרופיל שלי</a></li>
@@ -27,29 +28,31 @@
             <a href="login.html">התחברות / הרשמה</a>
         </div>
     </header>
+<!-- האזור העליון של האתר - header -->
 
-    <hr>
+    <hr> 
+    <main> 
+        <section id="quick-add"> 
+            <h2>לא מצאת סדרה? הוסף הצעה משלך</h2> 
+            <form action="#" method="get"> 
+                <label for="quickSearch">שם הסדרה:</label> 
+                <input type="text" id="quickSearch" name="seriesName" placeholder="הקלד שם סדרה..."> 
+                <button type="submit">חפש/הוסף</button> 
+                </form>
+            
+            <p>או <a href="add-anime.html">לחץ כאן</a> כדי למלא טופס הוספה מלא.</p> 
+            </section>
+<!-- תחילת התוכן המרכזי של האתר, טופס לחיפוש, הוספה מהירה של סדרה. -->
 
-    <main>
-        
-        <section id="quick-add">
-            <h2>לא מצאת סדרה? הוסף הצעה משלך</h2>
-            <form action="#" method="get">
-                <label for="quickSearch">שם הסדרה:</label>
-                <input type="text" id="quickSearch" name="seriesName" placeholder="הקלד שם סדרה...">
-                <button type="submit">חפש/הוסף</button>
-            </form>
-            <p>או <a href="add-anime.html">לחץ כאן</a> כדי למלא טופס הוספה מלא.</p>
-        </section>
-
-        <hr>
-
+        <hr> 
         <section id="latest-suggestion">
             <h2>המלצה אחרונה שנוספה למערכת</h2>
-            <article>
-                <img src="https://placehold.co/150x100" alt="תמונה של הסדרה האחרונה" width="150">
+            
+            <article> 
+                <img src="https://placehold.co/150x100" alt="תמונה של הסדרה האחרונה" width="150"> 
                 <h3>סדרה אחרונה</h3>
-                <p>הועלה על ידי: <strong>שם</strong></p>
+                
+                <p>הועלה על ידי: <strong>שם</strong></p> 
                 <a href="series-detail.html">למידע נוסף</a>
             </article>
         </section>
@@ -58,7 +61,9 @@
 
         <section id="trending-catalog">
             <h2>סדרות עם הכי הרבה התעניינות 🔥</h2>
-        </section>
+            </section>
+<!-- ההמלצה האחרונה שנוספה לאתר ואזור לסדרות הפופולריות ביותר. -->
 
-    </main> </body>
+    </main> 
+</body>
 </html>
