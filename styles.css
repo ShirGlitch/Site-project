@@ -1,0 +1,72 @@
+/* איפוס כללי */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    direction: rtl;
+    background-color: #f0f2f5;
+}
+
+/* עיצוב ה-Header */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; /* מחלק את המקום בין הלוגו, הניווט וההתחברות */
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* עיצוב הלוגו */
+header strong {
+    font-size: 1.5rem;
+    color: #3498db;
+}
+
+/* עיצוב הניווט */
+header nav h3 {
+    display: none; /* מחביא את הכותרת "תפריט ניווט" כי היא מיותרת בתפריט עליון */
+}
+
+header nav ul {
+    list-style: none; /* מבטל את הנקודות של הרשימה */
+    margin: 0;
+    padding: 0;
+    display: flex; /* הופך את הרשימה לשורה אחת */
+    gap: 20px; /* רווח בין הקישורים */
+}
+
+header nav a {
+    color: white;
+    text-decoration: none; /* מבטל את קו התחתון של הקישור */
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #3498db; /* צבע משתנה כשעוברים עם העכבר */
+}
+
+/* עיצוב אזור ההתחברות */
+header div a[href="login.html"] {
+    color: white;
+    text-decoration: none;
+    background-color: #3498db;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+header div a[href="login.html"]:hover {
+    background-color: #2980b9;
+}
+
+/* עיצוב התוכן המרכזי */
+main {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
