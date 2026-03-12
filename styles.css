@@ -8,7 +8,7 @@ body {
 
 /* עיצוב ה-Header */
 header {
-    background-color: #FFE099; /* צהוב פסטל חם ורך (כמו שמש של בוקר) */
+    background-color: #FFF0E6; /* צהוב פסטל חם ורך (כמו שמש של בוקר) */
     color: #4A3B32; /* חום כהה במקום אפור/שחור, שומר על התחושה החמה */
     padding: 10px 20px;
     display: flex;
@@ -43,22 +43,31 @@ header nav a {
     transition: color 0.3s;
 }
 
+/* עיצוב הקישור של הדף הנוכחי */
+header nav a.active {
+    color: #D96C4A; 
+    font-weight: bold; /* הדגשת הטקסט */
+    border-bottom: 0px;
+}
+
 header nav a:hover {
     color: #D96C4A; /* משתנה לאותו כתום-אדמה של הלוגו במעבר עכבר */
 }
 
 /* עיצוב אזור ההתחברות */
 header div a[href="login.html"] {
-    color: #4A3B32; /* טקסט כהה לקריאות מקסימלית */
+    color: #4A3B32; 
     text-decoration: none;
-    background-color: #FFC266; /* כתום-צהוב פסטלי ועמוק יותר שיבלוט על ההדר */
-    padding: 8px 15px;
-    border-radius: 5px;
+    background-color: #FCA276;
+    padding: 8px 18px; 
+    border-radius: 8px; 
     font-weight: bold;
+    transition: background-color 0.3s;
+    display: inline-block;
 }
 
 header div a[href="login.html"]:hover {
-    background-color: #FFAA33; /* מתכהה קצת במעבר עכבר */
+    background-color: rgb(244, 150, 116);
 }
 
 /* עיצוב התוכן המרכזי */
@@ -104,16 +113,18 @@ main {
 #quick-add input[type="text"] {
     padding: 12px 15px; /*הגדלת תיבת הכנסת הטקסט*/
     font-size: 1.1rem;
-    border: 2px solid #FFE099; /* מסגרת בצבע של ה-Header */
+    border: 2px solid #FDCBBA; /* מסגרת בצבע של ה-Header */
     border-radius: 8px; /*עיגול הפינות*/
     width: 280px;
     font-family: inherit;
     outline: none;
+    background-color: #FFFFFF; /* רקע בתוך התיבה */
+    transition: border-color 0.3s;
 }
 
 /* מה קורה כשלוחצים בתוך שדה ההקלדה */
 #quick-add input[type="text"]:focus {
-    border-color: #FFC107; /*הכהיית המסגרת בעת הקלדה*/
+    border-color: #FCA276; /*הכהיית המסגרת בעת הקלדה*/
 }
 
 /* עיצוב ריבוע הלחיצה (הכפתור) */
@@ -132,7 +143,7 @@ main {
 
 /* מעבר עכבר על הפכתור*/
 #quick-add button:hover {
-    background-color: #f58248;
+    background-color: rgb(244, 150, 116);
 }
 
 /* עיצוב הטקסט הקטן והקישור שמתחת לטופס */
