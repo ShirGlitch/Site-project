@@ -70,3 +70,83 @@ main {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
+
+/* עיצוב אזור הוספה מהירה (הטופס והכפתור) */
+#quick-add {
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* עיצוב הכותרת */
+#quick-add h2 {
+    color: #D96C4A;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+/* סידור הטופס*/
+#quick-add form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* עיצוב המילה "שם הסדרה:" */
+#quick-add label {
+    font-size: 1.2rem;
+    color: #4A3B32;
+    font-weight: bold;
+}
+
+/*עיצוב שדה ההקלדה*/
+#quick-add input[type="text"] {
+    padding: 12px 15px; /*הגדלת תיבת הכנסת הטקסט*/
+    font-size: 1.1rem;
+    border: 2px solid #FFE099; /* מסגרת בצבע של ה-Header */
+    border-radius: 8px; /*עיגול הפינות*/
+    width: 280px;
+    font-family: inherit;
+    outline: none;
+}
+
+/* מה קורה כשלוחצים בתוך שדה ההקלדה */
+#quick-add input[type="text"]:focus {
+    border-color: #FFC107; /*הכהיית המסגרת בעת הקלדה*/
+}
+
+/* עיצוב ריבוע הלחיצה (הכפתור) */
+#quick-add button {
+    background-color: #fca276;
+    color: #4A3B32;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 25px; /*גודל הכפתור*/
+    border: none;
+    border-radius: 8px; /* פינות עגולות כמו בתיבת הטקסט */
+    cursor: pointer; /* הופך את סמן העכבר ל"יד לוחצת" כשעוברים מעל */
+    transition: background-color 0.3s; /* גורם לשינוי הצבע במעבר עכבר להיות חלק */
+    font-family: inherit;
+}
+
+/* מעבר עכבר על הפכתור*/
+#quick-add button:hover {
+    background-color: #f58248;
+}
+
+/* עיצוב הטקסט הקטן והקישור שמתחת לטופס */
+#quick-add p {
+    font-size: 1.1rem;
+    color: #4A3B32;
+}
+
+#quick-add p a {
+    color: #D96C4A;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#quick-add p a:hover {
+    text-decoration: underline; /* מוסיף קו תחתון במעבר עכבר */
+}
