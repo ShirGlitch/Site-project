@@ -8,7 +8,7 @@ body {
 
 /* עיצוב ה-Header */
 header {
-    background-color: #ffcdaa;
+    background-color: #ffcdb8;
     color: #4A3B32;
     padding: 10px 20px;
     display: flex;
@@ -56,18 +56,18 @@ header nav a:hover {
 
 /* עיצוב אזור ההתחברות */
 header div a[href="login.html"] {
-    color: #4A3B32; 
+    color: #ffffff; 
     text-decoration: none;
-    background-color: #FCA276;
+    background-color:  rgb(244, 150, 116);
     padding: 8px 18px; 
-    border-radius: 8px; 
+    border-radius: 50px;
     font-weight: bold;
     transition: background-color 0.3s;
     display: inline-block;
 }
 
 header div a[href="login.html"]:hover {
-    background-color: rgb(244, 150, 116);
+    background-color: #D96C4A;
 }
 
 /* עיצוב התוכן המרכזי */
