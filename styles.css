@@ -3,7 +3,7 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     direction: rtl;
-    background-color: #ffe6e6; /* שמנת חמימה ומרגיעה */
+    background-color: #fff0e6;
 }
 
 /* עיצוב ה-Header */
@@ -20,12 +20,12 @@ header {
 /* עיצוב הלוגו */
 header strong {
     font-size: 1.5rem;
-    color: #D96C4A; /* כתום-אדמה/טרקוטה חם שמשתלב נפלא עם הצהוב */
+    color: #D96C4A;
 }
 
 /* עיצוב הניווט */
 header nav h3 {
-    display: none; /* מחביא את הכותרת "תפריט ניווט" כי היא מיותרת בתפריט עליון */
+    display: none; /
 }
 
 header nav ul {
@@ -33,12 +33,12 @@ header nav ul {
     margin: 0;
     padding: 0;
     display: flex; /* הופך את הרשימה לשורה אחת */
-    gap: 20px; /* רווח בין הקישורים */
+    gap: 20px;
 }
 
 header nav a {
-    color: #4A3B32; /* הוחלף מלבן כדי שיהיה קריא וברור על הרקע הפסטלי */
-    text-decoration: none; /* מבטל את קו התחתון של הקישור */
+    color: #4A3B32;
+    text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
 }
@@ -46,12 +46,12 @@ header nav a {
 /* עיצוב הקישור של הדף הנוכחי */
 header nav a.active {
     color: #D96C4A; 
-    font-weight: bold; /* הדגשת הטקסט */
+    font-weight: bold;
     border-bottom: 0px;
 }
 
 header nav a:hover {
-    color: #D96C4A; /* משתנה לאותו כתום-אדמה של הלוגו במעבר עכבר */
+    color: #D96C4A;
 }
 
 /* עיצוב אזור ההתחברות */
@@ -75,89 +75,109 @@ main {
     max-width: 1000px;
     margin: 30px auto;
     padding: 20px;
-    background: white; /* נשאר לבן כדי שהתוכן המרכזי יהיה קריא וברור */
+    background: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-/* עיצוב אזור הוספה מהירה (הטופס והכפתור) */
+/* אזור הוספה מהירה / חיפוש */
+
+/* יצירת "קופסה" סביב האזור*/
 #quick-add {
+    background: linear-gradient(135deg, #fffaf6 0%, #ffe8d6 100%);
+    border-radius: 16px;
+    padding: 40px 20px;
     text-align: center;
-    padding: 20px 0;
+    box-shadow: 0 4px 20px rgba(217, 108, 74, 0.08);
+    border: 1px solid #FDCBBA;
+    margin-bottom: 40px;
 }
 
-/* עיצוב הכותרת */
+/* עיצוב הכותרת באזור החיפוש */
 #quick-add h2 {
     color: #D96C4A;
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
 }
 
-/* סידור הטופס*/
+/* סידור הטופס */
 #quick-add form {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
 }
 
-/* עיצוב המילה "שם הסדרה:" */
 #quick-add label {
     font-size: 1.2rem;
     color: #4A3B32;
     font-weight: bold;
+    display: none;
 }
 
-/*עיצוב שדה ההקלדה*/
+/* עיצוב שדה ההקלדה */
 #quick-add input[type="text"] {
-    padding: 12px 15px; /*הגדלת תיבת הכנסת הטקסט*/
+    padding: 15px 25px; 
     font-size: 1.1rem;
-    border: 2px solid #FDCBBA; /* מסגרת בצבע של ה-Header */
-    border-radius: 8px; /*עיגול הפינות*/
-    width: 280px;
+    border: 2px solid #FDCBBA; 
+    border-radius: 50px;
+    width: 100%;
+    max-width: 400px;
     font-family: inherit;
     outline: none;
-    background-color: #FFFFFF; /* רקע בתוך התיבה */
-    transition: border-color 0.3s;
+    background-color: #FFFFFF; 
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
 }
 
-/* מה קורה כשלוחצים בתוך שדה ההקלדה */
+/* אפקט פוקוס משודרג בזמן הקלדה - ללא קפיצה */
 #quick-add input[type="text"]:focus {
-    border-color: #FCA276; /*הכהיית המסגרת בעת הקלדה*/
+    border-color: #D96C4A; 
 }
 
-/* עיצוב ריבוע הלחיצה (הכפתור) */
+/* עיצוב הכפתור */
 #quick-add button {
-    background-color: #fca276;
-    color: #4A3B32;
+    background-color:rgb(231, 137, 102);
+    color: #FFFFFF;
     font-size: 1.1rem;
     font-weight: bold;
-    padding: 12px 25px; /*גודל הכפתור*/
+    padding: 15px 35px; 
     border: none;
-    border-radius: 8px; /* פינות עגולות כמו בתיבת הטקסט */
-    cursor: pointer; /* הופך את סמן העכבר ל"יד לוחצת" כשעוברים מעל */
-    transition: background-color 0.3s; /* גורם לשינוי הצבע במעבר עכבר להיות חלק */
+    border-radius: 50px;
+    cursor: pointer; 
+    box-shadow: 0 4px 10px rgba(217, 108, 74, 0.3);
+    transition: all 0.3s ease; 
     font-family: inherit;
 }
 
-/* מעבר עכבר על הפכתור*/
+/* אפקט ריחוף (Hover) על הכפתור - ללא קפיצה */
 #quick-add button:hover {
-    background-color: rgb(244, 150, 116);
+    background-color:  #D96C4A;
 }
 
-/* עיצוב הטקסט הקטן והקישור שמתחת לטופס */
+/* לחיצה על הכפתור */
+#quick-add button:active {
+    background-color: #b04d30;
+}
+
+/* עיצוב הטקסט הקטן שמתחת לטופס */
 #quick-add p {
     font-size: 1.1rem;
-    color: #4A3B32;
+    color: #6b584d;
+    margin-bottom: 0;
 }
 
 #quick-add p a {
     color: #D96C4A;
     font-weight: bold;
     text-decoration: none;
+    transition: color 0.3s;
 }
 
 #quick-add p a:hover {
-    text-decoration: underline; /* מוסיף קו תחתון במעבר עכבר */
+    text-decoration: underline;
 }
