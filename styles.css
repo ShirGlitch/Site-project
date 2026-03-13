@@ -3,13 +3,13 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     direction: rtl;
-    background-color: #FFF9E6; /* שמנת חמימה ומרגיעה */
+    background-color: #fff0e6; /* שמנת חמימה ומרגיעה */
 }
 
 /* עיצוב ה-Header */
 header {
-    background-color: #FFF0E6; /* צהוב פסטל חם ורך (כמו שמש של בוקר) */
-    color: #4A3B32; /* חום כהה במקום אפור/שחור, שומר על התחושה החמה */
+    background-color: #ffcdaa;
+    color: #4A3B32;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between; /* חילוק המקום בין הלוגו, הניווט וההתחברות */
