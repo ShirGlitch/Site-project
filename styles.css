@@ -25,7 +25,7 @@ header strong {
 
 /* עיצוב הניווט */
 header nav h3 {
-    display: none; /
+    display: none;
 }
 
 header nav ul {
@@ -48,6 +48,10 @@ header nav a.active {
     color: #D96C4A; 
     font-weight: bold;
     border-bottom: 0px;
+}
+
+header nav a.active:hover {
+    text-decoration: underline;
 }
 
 header nav a:hover {
@@ -80,7 +84,9 @@ main {
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-/* אזור הוספה מהירה / חיפוש */
+/* =========================================
+        אזור הוספה מהירה / חיפוש
+========================================= */
 
 /* יצירת "קופסה" סביב האזור*/
 #quick-add {
@@ -179,5 +185,80 @@ main {
 }
 
 #quick-add p a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   אזור המלצה אחרונה שנוספה
+========================================= */
+
+/* יישור הכותרת של האזור */
+#latest-suggestion {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+#latest-suggestion h2 {
+    color: #D96C4A;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+/* עיצוב כרטיסיית הסדרה */
+#latest-suggestion article {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 20px; 
+    box-shadow: 0 4px 20px rgba(217, 108, 74, 0.08);
+    border: 1px solid #FDCBBA;
+    max-width: 350px;
+    margin: 0 auto;
+    transition: box-shadow 0.3s ease;
+}
+
+#latest-suggestion article:hover {
+    box-shadow: 0 8px 30px rgba(217, 108, 74, 0.15); 
+}
+
+/* עיצוב התמונה בתוך הכרטיסייה */
+#latest-suggestion img {
+    border-radius: 12px;
+    width: 100%;
+    height: auto;
+    max-height: 220px;
+    object-fit: cover;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 15px;
+}
+
+/* עיצוב שם הסדרה */
+#latest-suggestion article h3 {
+    color: #4A3B32;
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+/* עיצוב טקסט התיאור */
+#latest-suggestion article p {
+    color: #6b584d;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    font-size: 1.05rem;
+}
+
+/* עיצוב קישור למידע נוסף */
+#latest-suggestion article a {
+    display: inline-block; 
+    color: #D96C4A;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-top: 5px;
+    transition: color 0.3s ease;
+}
+
+#latest-suggestion article a:hover {
+    color: #c2593b;
     text-decoration: underline;
 }
