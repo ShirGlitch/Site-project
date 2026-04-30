@@ -4,14 +4,14 @@ function loadHeader() {
 
     const headerHTML = `
         <div class="header-left-part"> 
-            <strong>AniList-IL</strong> 
+            <strong>BingeList</strong>
         </div>
 
         <nav class="header-center-part"> 
             <ul class="nav-links"> 
                 <li><a href="index.html" class="${currentPage === 'index.html' ? 'active' : ''}">דף הבית</a></li>
                 <li><a href="full-catalog.html" class="${currentPage === 'full-catalog.html' ? 'active' : ''}">קטלוג הסדרות המלא</a></li>
-                <li><a href="add-anime.html" class="${currentPage === 'add-anime.html' ? 'active' : ''}">הוסף סדרה</a></li>
+                <li><a href="add-series.html" class="${currentPage === 'add-series.html' ? 'active' : ''}">הוסף סדרה</a></li>
                 <li><a href="profile.html" class="${currentPage === 'profile.html' ? 'active' : ''}">הפרופיל שלי</a></li>
             </ul>
         </nav>
