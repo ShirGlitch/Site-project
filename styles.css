@@ -360,3 +360,85 @@ main {
     color: #a08d82;
     font-size: 0.85rem;
 }
+/* =========================================
+   אזור הוספת סדרה
+========================================= */
+
+/* עיצוב לדף הטפסים */
+.form-page-main {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* סידור הרווחים בין השדות */
+.form-group {
+    display: flex;
+    flex-direction: column; /* גורם לתווית להיות מעל השדה */
+    margin-bottom: 20px; /* רווח קבוע בין שדה לשדה */
+    gap: 8px; /* רווח קטן בין התווית לשדה עצמו */
+}
+
+/* עיצוב התוויות (Labels) */
+.form-group label {
+    font-weight: bold;
+    color: #4A3B32;
+}
+
+/* עיצוב שדות ההזנה (Inputs, Select, Textarea) */
+input, select, textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px; /* רווח בין הכפתורים */
+    margin-top: 10px;
+}
+
+/* האזור שעוטף את הכפתורים */
+.form-actions {
+    display: flex;
+    gap: 15px; 
+    margin-top: 10px;
+}
+
+/* עיצוב הבסיס החמוד והעגול לשני הכפתורים */
+.form-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 24px; /* פינות עגולות כמו בגוגל */
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease; /* לאנימציה חלקה */
+}
+
+/* כפתור שמירה - הצבע הכתום */
+.save-btn {
+    background-color: #D96C4A; /* צבע כתום */
+    color: white; /* טקסט לבן */
+}
+
+.save-btn:hover {
+    background-color: #bf5b3b; /* כתום כהה יותר במעבר עכבר */
+    box-shadow: 0 4px 12px rgba(217, 108, 74, 0.4); /* צל כתמתם */
+}
+
+/* כפתור ביטול - הצבע האפור */
+.cancel-btn {
+    background-color: #eeeeee; /* רקע אפור בהיר */
+    color: #4A3B32; /* טקסט חום כהה כמו בשאר האתר */
+}
+
+.cancel-btn:hover {
+    background-color: #dddddd; /* אפור קצת יותר כהה במעבר עכבר */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* צל עדין */
+}
