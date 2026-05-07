@@ -54,6 +54,22 @@ function setupSearch() {
     }
 }
 
+// פונקציה לניהול פתיחה וסגירה של סרגל הסינונים
+function setupFilters() {
+    const filterBar = document.querySelector('.filter-bar');
+    const openBtn = document.querySelector('.open-filter-btn');
+
+    if (openBtn && filterBar) {
+        openBtn.addEventListener('click', () => {
+            filterBar.classList.toggle('open');
+        });
+    }
+
+}
+
+// קריאה לפונקציה כשהדף נטען
+document.addEventListener('DOMContentLoaded', setupFilters);
+
 // הפעלת ההדר והחיפוש יחד
 document.addEventListener("DOMContentLoaded", () => {
     loadHeader();

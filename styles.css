@@ -164,7 +164,7 @@ main {
 
 /* עיצוב הכפתור */
 #quick-add button {
-    background-color:rgb(231, 137, 102);
+    background-color: rgb(231, 137, 102);
     color: #FFFFFF;
     font-size: 1.1rem;
     font-weight: bold;
@@ -462,7 +462,7 @@ select {
     -webkit-appearance: none; /* תמיכה לדפדפנים ישנים */
     -moz-appearance: none; /* תמיכה לדפדפנים ישנים */
     
-    /* כאן אנחנו מציירים חץ כתום מותאם אישית */
+    /* ציור חץ כתום*/
     background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D96C4A%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
     background-repeat: no-repeat;
     background-position: left 15px center; /* שמים את החץ בצד שמאל כי האתר בעברית (RTL) */
@@ -507,4 +507,61 @@ option {
 .star-rating label:hover ~ label {
     color: #FFD700;
     text-shadow: 0 2px 12px rgba(255, 215, 0, 0.6);
+}
+
+/* =========================================
+   אזור קטלוג הסדרות המלא
+========================================= */
+
+.filter-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.filter-bar {
+    display: none;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-bar.open {
+    display: flex; 
+}
+
+.filter-bar select, .filter-bar .cancel-btn {
+    height: 40px;
+}
+.open-filter-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background-color: #D96C4A;
+    color: white;
+}
+
+.open-filter-btn:hover {
+    box-shadow: 0 4px 12px rgba(217, 108, 74, 0.4);
+}
+
+.cancel-btn {
+    color: #b17968;
+    border-radius: 24px;
+    border:1px solid #FDCBBA;
+    width: fit-content;
+    background-color:#FFFFFF;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-family: inherit;
+    transition: all 0.3s ease;
+    padding: 12px;
+}
+
+.cancel-btn:hover {
+    background-color:#FFFFFF;
+    transition: all 0.3s ease;
+    border-color: #e28e74; 
 }
