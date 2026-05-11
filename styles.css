@@ -565,3 +565,76 @@ option {
     transition: all 0.3s ease;
     border-color: #e28e74; 
 }
+
+/* =========================================
+   עיצוב קטלוג הסדרות
+========================================= */
+
+/* הקונטיינר הראשי שעוטף את כל הסדרות */
+#series-catalog-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+    padding: 10px;
+}
+
+/* עיצוב כרטיסיית סדרה בודדת */
+.series {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #FDCBBA;
+    box-shadow: 0 4px 15px rgba(217, 108, 74, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ריחוף מעל כרטיסייה */
+.series:hover {
+    box-shadow: 0 8px 25px rgba(217, 108, 74, 0.15);
+    border-color: #D96C4A;
+}
+
+/* עיצוב התמונה בתוך הכרטיסייה */
+.series img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background-color: #f9f9f9;
+}
+
+/* עיצוב שם הסדרה */
+.series h3 {
+    color: #D96C4A;
+    font-size: 1.25rem;
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+}
+
+/* עיצוב למידע נוסף*/
+.series h4 {
+    background-color: rgb(231, 137, 102);
+    color: #FFFFFF;
+    padding: 5px 15px;
+    border-radius: 50px;
+    cursor: pointer; 
+    box-shadow: 0 4px 10px rgba(217, 108, 74, 0.3);
+    transition: all 0.3s ease; 
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 10px auto 5px;
+    width: fit-content;
+    display: block;
+}
+
+.series h4:hover {
+    background-color:  #D96C4A;
+}
+

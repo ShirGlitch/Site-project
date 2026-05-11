@@ -27,6 +27,41 @@ function loadHeader() {
     }
 }
 
+// מערך לסדרות האתר
+const seriesData = [
+    {
+       id: 1, 
+       title: "sName",
+       genre: "action",
+       rating: 1,
+       image: "url",
+       description: ""
+    }, 
+    {
+       id: 2, 
+       title: "sName",
+       genre: "drama",
+       rating: 2,
+       image: "url",
+       description: ""
+    }
+]
+
+//פונקציה להוספת הסדרות לדף הקטלוג
+function renderSeries(data){
+    let container = document.getElementById('series-catalog-container');
+    container.innerHTML = "";
+    document.getElementById('series-catalog-container');
+    data.forEach((series) => {    
+        const cardHTML = `<div class = "series">
+        <img src ="${series.image}">
+        <h3>${series.title}</h3>
+        <h4>למידע נוסף</h4>
+        </div>`;
+        container.innerHTML += cardHTML;
+});
+}
+
 // פונקציה לטופס החיפוש המהיר בדף הבית
 function setupSearch() {
     // מוצאים את הטופס ואת שדה החיפוש לפי ה-ID שלהם ב-HTML
@@ -59,19 +94,55 @@ function setupFilters() {
     const filterBar = document.querySelector('.filter-bar');
     const openBtn = document.querySelector('.open-filter-btn');
 
+// אלמנטים של הסינון
+    const genreSelect = document.getElementById('genre-filter');
+    const ratingSelect = document.getElementById('rating-filter');
+    const resetBtn = document.querySelector('.filter-bar .cancel-btn');
+
     if (openBtn && filterBar) {
         openBtn.addEventListener('click', () => {
             filterBar.classList.toggle('open');
         });
     }
+// פונקציה שמבצעת את הסינון בפועל
+    function applyFilters() {
+        const selectedGenre = genreSelect.value;
+        const selectedRating = ratingSelect.value;
 
+        const filteredData = seriesData.filter(series => {
+            // האם הז'אנר מתאים?
+            const genreMatch = selectedGenre.includes("סינון") || series.genre === selectedGenre;
+            
+            // האם הדירוג מתאים?
+            const ratingMatch = selectedRating.includes("סינון") || series.rating == selectedRating;
+
+            return genreMatch && ratingMatch;
+        });
+
+        // הצגת הנתונים המסוננים
+        renderSeries(filteredData);
+    }
+
+    // האזנה לשינויים בבחירה
+    if (genreSelect) genreSelect.addEventListener('change', applyFilters);
+    if (ratingSelect) ratingSelect.addEventListener('change', applyFilters);
+
+    // כפתור ניקוי סינונים
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            genreSelect.selectedIndex = 0;
+            ratingSelect.selectedIndex = 0;
+            renderSeries(seriesData); // הצגת הכל מחדש
+        });
+    }
 }
 
 // קריאה לפונקציה כשהדף נטען
 document.addEventListener('DOMContentLoaded', setupFilters);
 
-// הפעלת ההדר והחיפוש יחד
+// הפעלת ההדר, החיפוש ופונקציית הסדרות
 document.addEventListener("DOMContentLoaded", () => {
     loadHeader();
     setupSearch(); 
+    renderSeries(seriesData);
 });
