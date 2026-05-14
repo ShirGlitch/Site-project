@@ -50,10 +50,6 @@ header nav a.active {
     border-bottom: 0px;
 }
 
-header nav a.active:hover {
-    text-decoration: underline;
-}
-
 header nav a:hover {
     color: #D96C4A;
 }
