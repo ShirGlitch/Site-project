@@ -111,6 +111,45 @@ function setupAddSeriesForm() {
     });
 }
 
+// פונקציה לטופס החיפוש המהיר בדף הבית
+function setupSearch() {
+    const searchInput = document.getElementById('quickSearch');
+    const container = document.getElementById('series-catalog-container');
+    const latestSection = document.getElementById('latest-suggestion');
+
+    if (!searchInput || !container) return;
+// מניעת רענון הדף בלחיצה על Enter
+    if (searchForm) {
+        searchForm.addEventListener('submit', (e) => e.preventDefault());
+    }
+
+    searchInput.addEventListener('input', (e) => {  
+        const searchTerm = e.target.value.trim().toLowerCase();
+
+        // אם החיפוש ריק להסתיר את הסדרות
+        if (searchTerm === "") {
+            container.innerHTML = ""; 
+            container.style.display = "none"; 
+            if (latestSection) latestSection.style.display = "block"; 
+            return;
+        }
+        // אם יש טקסט בחיפוש
+        const filteredSeries = seriesData.filter(series => 
+            series.title.toLowerCase().includes(searchTerm)
+        );
+
+        if (filteredSeries.length > 0) {
+            if (latestSection) latestSection.style.display = "none";
+            container.classList.add('show-results'); // הצגת הקטלוג
+            renderSeries(filteredSeries);
+        } else {
+            // אם חיפשנו ואין תוצאות
+            container.innerHTML = "<p class='no-results-msg'>לא מצאנו סדרה כזו... אולי תוסיפו אותה?</p>";
+            container.classList.add('show-results');
+        }
+    });
+}
+
 //פונקציה להוספת הסדרות לדף הקטלוג
 function renderSeries(data){
     let container = document.getElementById('series-catalog-container');
@@ -163,33 +202,6 @@ function setupModalClosing() {
             modal.classList.add('hidden');
         }
     });
-}
-
-// פונקציה לטופס החיפוש המהיר בדף הבית
-function setupSearch() {
-    // מוצאים את הטופס ואת שדה החיפוש לפי ה-ID שלהם ב-HTML
-    const searchForm = document.querySelector('#quick-add form');
-    const searchInput = document.getElementById('quickSearch');
-
-    // מוודאים שאנחנו באמת נמצאים בדף שיש בו את החיפוש (כדי שלא תהיה שגיאה בדפים אחרים)
-    if (searchForm && searchInput) {
-        searchForm.addEventListener('submit', function(event) {
-            // עוצר את רענון הדף האוטומטי
-            event.preventDefault(); 
-            
-            // ניקוי רווחים מיותרים ממה שהמשתמש הקליד בהתחלה ובסוף
-            const searchTerm = searchInput.value.trim();
-
-            if (searchTerm !== '') {
-                // הדפסה לקונסול כדי לוודא שזה עובד
-                console.log('המשתמש חיפש את הסדרה:', searchTerm);
-                
-                // כאן נכניס בהמשך את הקוד שמעביר לדף הנכון!
-            } else {
-                alert('נא להקליד שם סדרה לפני החיפוש.');
-            }
-        });
-    }
 }
 
 // פונקציה לניהול פתיחה וסגירה של סרגל הסינונים
@@ -256,11 +268,10 @@ function showSeriesDetails(series) {
 document.addEventListener('DOMContentLoaded', setupFilters);
 
 // הפעלת ההדר, החיפוש ופונקציית הסדרות
-document.addEventListener("DOMContentLoaded", () => {
-    loadSeriesFromFirestore();
+document.addEventListener("DOMContentLoaded", async () => {
     loadHeader();
+    await loadSeriesFromFirestore();
     setupSearch(); 
     setupAddSeriesForm();
-    renderSeries(seriesData);
-    setupModalClosing()
+    setupModalClosing();
 });
