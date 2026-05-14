@@ -1,0 +1,72 @@
+<!DOCTYPE html> 
+<html lang="he" dir="rtl"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="styles.css"> 
+        <title>BingeList - קטלוג הסדרות המלא</title>
+    </head>
+<!-- הגדרות האתר -->
+
+<body>
+    <header id="main-header"></header>
+
+    <script type="module" src="script.js"></script>
+<!-- האזור העליון של האתר - header -->
+
+    <main> 
+        <section id="quick-add"> 
+            <h2>לא מצאת סדרה? הוסף סדרה משלך</h2> 
+            <form action="#" method="get"> 
+                <label for="quickSearch">שם הסדרה:</label> 
+                <input type="text" id="quickSearch" name="seriesName" placeholder="הקלד שם סדרה..."> 
+                <button type="submit">חפש/הוסף</button> 
+                </form>
+            
+            <p>או <a href="add-series.html">לחץ כאן</a> כדי למלא טופס הוספה מלא.</p> 
+            </section>
+<!-- תחילת התוכן המרכזי של האתר, טופס לחיפוש, הוספה מהירה של סדרה. -->
+        <div class="filter-wrapper">
+            <button type="button" class="open-filter-btn">סינון מתקדם</button>
+
+         <div class = "filter-bar">
+
+                    <select id="genre-filter" name="genre-filter">
+                        <option disabled selected hidden>סינון ג'אנר</option>
+                        <option value="romance">רומנטיקה</option>
+                        <option value="drama">דרמה</option>
+                        <option value="action">אקשן</option>
+                        <option value="comedy">קומדיה</option>
+                        <option value="horror">אימה</option>
+                    </select>
+
+                    <select id="rating-filter" name="rating-filter">
+                        <option disabled selected hidden>סינון דירוג</option>
+                        <option value="1">1</option>                        
+                        <option value="2">2</option>  
+                        <option value="3">3</option>                        
+                        <option value="4">4</option> 
+                        <option value="5">5</option>
+                    </select>
+
+                <button type="reset" class="cancel-btn">ניקוי סינונים</button> 
+        </div>
+        </div>
+
+        <section id = "series-catalog-container">
+
+
+        </section>
+    </main>
+<!-- מידע נוסף -->
+    <div id="series-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+        <span id="close-modal" class="close-btn">&times;</span>
+        <img id="modal-image" src="" alt="Series Image">
+        <h2 id="modal-title"></h2>
+        <div id="modal-rating"></div>
+        <p id="modal-description"></p>
+    </div>
+</div>
+</body>
+</html>
