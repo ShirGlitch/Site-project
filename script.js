@@ -117,13 +117,52 @@ function renderSeries(data){
     if (!container) return;
     container.innerHTML = "";
     data.forEach((series) => {    
-        const cardHTML = `<div class = "series">
-        <img src ="${series.image}">
-        <h3>${series.title}</h3>
-        <h4>למידע נוסף</h4>
-        </div>`;
-        container.innerHTML += cardHTML;
+    const cardHTML = `
+        <div class="series">
+            <img src="${series.image}">
+            <h3>${series.title}</h3>
+            <div class="rating-display">⭐ ${series.rating}/5</div> 
+            <h4 class="more-info-btn" data-id="${series.id}" style="cursor: pointer;">למידע נוסף</h4>        </div>`;
+    container.innerHTML += cardHTML;
 });
+// מאזינים לכפתורים
+    const infoButtons = document.querySelectorAll('.more-info-btn');
+    infoButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const seriesId = btn.getAttribute('data-id');
+            const selectedSeries = data.find(s => s.id == seriesId);
+            openModal(selectedSeries);
+        });
+    });
+}
+
+// פונקציה לפתיחת המודל
+function openModal(series) {
+    document.getElementById('modal-title').innerText = series.title;
+    document.getElementById('modal-description').innerText = series.description;
+    document.getElementById('modal-image').src = series.image;
+    document.getElementById('modal-rating').innerText = `דירוג: ⭐ ${series.rating}/5`;
+    
+    document.getElementById('series-modal').classList.remove('hidden');
+}
+
+// פונקציה לסגירת המודל
+function setupModalClosing() {
+    const closeModal = document.getElementById('close-modal');
+    const modal = document.getElementById('series-modal');
+
+    if(closeModal) {
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+    }
+
+    // סגירה בלחיצה מחוץ לקופסה הלבנה
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.classList.add('hidden');
+        }
+    });
 }
 
 // פונקציה לטופס החיפוש המהיר בדף הבית
@@ -201,6 +240,18 @@ function setupFilters() {
     }
 }
 
+// מה קורה כשלוחצים על מידע נוסף
+function showSeriesDetails(series) {
+    const modal = document.getElementById('series-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-description');
+    
+    modalTitle.innerText = series.title;
+    modalDesc.innerText = series.description;
+    
+    modal.classList.remove('hidden');
+}
+
 // קריאה לפונקציה כשהדף נטען
 document.addEventListener('DOMContentLoaded', setupFilters);
 
@@ -211,4 +262,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupSearch(); 
     setupAddSeriesForm();
     renderSeries(seriesData);
+    setupModalClosing()
 });
