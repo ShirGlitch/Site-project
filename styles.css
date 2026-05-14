@@ -479,7 +479,7 @@ option {
 }
 
 /* אזור דירוג הכוכבים */
-.star-rating {
+.rating {
     display: inline-flex;
     flex-direction: row-reverse; /* הופך את הסדר כדי שהצביעה תעבוד נכון מימין לשמאל */
     justify-content: flex-end;
@@ -488,12 +488,12 @@ option {
 }
 
 /* העלמת כפתורי הרדיו המקוריים */
-.star-rating input[type="radio"] {
+.rating input[type="radio"] {
     display: none;
 }
 
 /* עיצוב הכוכבים עצמם */
-.star-rating label {
+.rating label {
     font-size: 40px;
     line-height: 1;
     color: #ddd;
@@ -502,11 +502,29 @@ option {
 }
 
 /*כשעוברם עם העכבר או לוחצים על כוכב הוא נצבע בצהוב*/
-.star-rating input[type="radio"]:checked ~ label,
-.star-rating label:hover,
-.star-rating label:hover ~ label {
+.rating input[type="radio"]:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
     color: #FFD700;
     text-shadow: 0 2px 12px rgba(255, 215, 0, 0.6);
+}
+
+/* עיצוב הודעת ההצלחה */
+#success-message {
+    background-color: #9de0a0;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: opacity 0.5s ease;
+}
+
+/* המחלקה שמסתירה את ההודעה כברירת מחדל */
+.hidden {
+    display: none;
 }
 
 /* =========================================

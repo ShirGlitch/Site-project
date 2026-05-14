@@ -47,9 +47,56 @@ const seriesData = [
     }
 ]
 
+function setupAddSeriesForm() {
+    // תופסים את הטופס ושומרים במשתנה
+    const addForm = document.getElementById('add-series-form');
+
+    // מוסיפים למשתנה מאזין
+    addForm.addEventListener('submit', function(event) {
+    // עצירת הדף מרענון
+    event.preventDefault()
+    // שאיבת ושמירת שם הסדרה
+    const title = document.getElementById('title').value;
+    // שאיבת ושמירת תמונת הסדרה
+    const image = document.getElementById('images').value;
+    // שאיבת ושמירת ג'אנר הסדרה
+    const genre = document.getElementById('genre').value;
+    // שאיבת ושמירת תיאור הסדרה
+    const description = document.getElementById('description').value;
+    // שאיבת הדירוג המסומן והפיכתו למספר
+    const selectedRating = document.querySelector('input[name="rating"]:checked');
+    const ratingValue = selectedRating ? parseInt(selectedRating.value) : 0;
+
+    const newSeries = {
+        id: Date.now(), 
+        title: title,
+        genre: genre,
+        rating: parseInt(selectedRating.value),
+        image: image,
+        description: description
+    }
+
+    // הוספה למערך
+    seriesData.push(newSeries);
+
+    // הודעת הצלחה למשתמש
+    const successMsg = document.getElementById('success-message');
+
+    //מורידים את מחלקת ההסתרה כדי שההודעה תוצג
+    successMsg.classList.remove('hidden');
+
+    // 3. משתמשים בטיימר כדי להחזיר את ההסתרה אחרי 3 שניות (3000 מילישניות)
+    setTimeout(function() {
+    successMsg.classList.add('hidden');}, 3000);
+    // ניקוי הטופס (איפוס השדות)
+    addForm.reset();    
+    });
+}
+
 //פונקציה להוספת הסדרות לדף הקטלוג
 function renderSeries(data){
     let container = document.getElementById('series-catalog-container');
+    if (!container) return;
     container.innerHTML = "";
     document.getElementById('series-catalog-container');
     data.forEach((series) => {    
@@ -144,5 +191,6 @@ document.addEventListener('DOMContentLoaded', setupFilters);
 document.addEventListener("DOMContentLoaded", () => {
     loadHeader();
     setupSearch(); 
+    setupAddSeriesForm();
     renderSeries(seriesData);
 });
