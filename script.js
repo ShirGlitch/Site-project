@@ -1,3 +1,6 @@
+import { db, auth } from './firebase.js';
+import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
 function loadHeader() {
     // 1. זיהוי הדף הנוכחי
     const currentPage = window.location.pathname.split("/").pop() || "index.html";
@@ -28,68 +31,83 @@ function loadHeader() {
 }
 
 // מערך לסדרות האתר
-const seriesData = [
-    {
-       id: 1, 
-       title: "sName",
-       genre: "action",
-       rating: 1,
-       image: "url",
-       description: ""
-    }, 
-    {
-       id: 2, 
-       title: "sName",
-       genre: "drama",
-       rating: 2,
-       image: "url",
-       description: ""
+let seriesData = [];
+
+// משיכת הנתונים מהפייר בייס
+async function loadSeriesFromFirestore() {
+    try {
+        console.log("מתחיל למשוך נתונים מ-Firebase...");
+        const querySnapshot = await getDocs(collection(db, "series"));
+        
+        seriesData = []; // איפוס המערך
+        
+        querySnapshot.forEach((doc) => {
+            console.log("נמצאה סדרה בענן:", doc.data());
+            seriesData.push(doc.data());
+        });
+
+        // כאן הקסם קורה: קוראים לפונקציה שלך עם המערך המלא
+        console.log("מעביר את הנתונים לציור על המסך...");
+        renderSeries(seriesData); 
+
+    } catch (error) {
+        console.error("שגיאה בטעינת הנתונים: ", error);
     }
-]
+}
 
 function setupAddSeriesForm() {
     // תופסים את הטופס ושומרים במשתנה
     const addForm = document.getElementById('add-series-form');
 
+    // אם הטופס לא קיים בדף הנוכחי, פשוט תצא מהפונקציה ואל תעשה כלום
+    if (!addForm) return;
+
     // מוסיפים למשתנה מאזין
-    addForm.addEventListener('submit', function(event) {
-    // עצירת הדף מרענון
-    event.preventDefault()
-    // שאיבת ושמירת שם הסדרה
-    const title = document.getElementById('title').value;
-    // שאיבת ושמירת תמונת הסדרה
-    const image = document.getElementById('images').value;
-    // שאיבת ושמירת ג'אנר הסדרה
-    const genre = document.getElementById('genre').value;
-    // שאיבת ושמירת תיאור הסדרה
-    const description = document.getElementById('description').value;
-    // שאיבת הדירוג המסומן והפיכתו למספר
-    const selectedRating = document.querySelector('input[name="rating"]:checked');
-    const ratingValue = selectedRating ? parseInt(selectedRating.value) : 0;
+    addForm.addEventListener('submit', async (event) => {
+        // עצירת הדף מרענון
+        event.preventDefault();
 
-    const newSeries = {
-        id: Date.now(), 
-        title: title,
-        genre: genre,
-        rating: parseInt(selectedRating.value),
-        image: image,
-        description: description
-    }
+        // שאיבת ושמירת הנתונים
+        const title = document.getElementById('title').value;
+        const image = document.getElementById('images').value;
+        const genre = document.getElementById('genre').value;
+        const description = document.getElementById('description').value;
+        
+        // שאיבת הדירוג המסומן והפיכתו למספר בטוח
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        const ratingValue = selectedRating ? parseInt(selectedRating.value) : 0;
 
-    // הוספה למערך
-    seriesData.push(newSeries);
+        const newSeries = {
+            id: Date.now(), 
+            title: title,
+            genre: genre,
+            rating: ratingValue,
+            image: image,
+            description: description
+        };
 
-    // הודעת הצלחה למשתמש
-    const successMsg = document.getElementById('success-message');
+        // ניסיון לשמור בענן
+        try {
+            await addDoc(collection(db, "series"), newSeries);
+            
+            console.log("הסדרה נשמרה בענן בהצלחה!");
+            
+            // הודעת הצלחה למשתמש
+            const successMsg = document.getElementById('success-message');
+            successMsg.classList.remove('hidden');
 
-    //מורידים את מחלקת ההסתרה כדי שההודעה תוצג
-    successMsg.classList.remove('hidden');
+            // משתמשים בטיימר כדי להחזיר את ההסתרה אחרי 3 שניות
+            setTimeout(function() {
+                successMsg.classList.add('hidden');
+            }, 3000);
+            
+            // ניקוי הטופס פעם אחת בלבד
+            addForm.reset();
 
-    // 3. משתמשים בטיימר כדי להחזיר את ההסתרה אחרי 3 שניות (3000 מילישניות)
-    setTimeout(function() {
-    successMsg.classList.add('hidden');}, 3000);
-    // ניקוי הטופס (איפוס השדות)
-    addForm.reset();    
+        } catch (error) {
+            console.error("שגיאה בהוספת הסדרה: ", error);
+            alert("הייתה בעיה בשמירת הסדרה, אנא נסו שוב.");
+        }
     });
 }
 
@@ -98,7 +116,6 @@ function renderSeries(data){
     let container = document.getElementById('series-catalog-container');
     if (!container) return;
     container.innerHTML = "";
-    document.getElementById('series-catalog-container');
     data.forEach((series) => {    
         const cardHTML = `<div class = "series">
         <img src ="${series.image}">
@@ -189,6 +206,7 @@ document.addEventListener('DOMContentLoaded', setupFilters);
 
 // הפעלת ההדר, החיפוש ופונקציית הסדרות
 document.addEventListener("DOMContentLoaded", () => {
+    loadSeriesFromFirestore();
     loadHeader();
     setupSearch(); 
     setupAddSeriesForm();
