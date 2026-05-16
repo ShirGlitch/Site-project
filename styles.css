@@ -293,3 +293,498 @@ main {
     color: #c2593b;
     text-decoration: underline;
 }
+
+/* --- תיבת ההתחברות --- */
+.auth-page-main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 80px);
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.auth-container {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 50px 40px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(217, 108, 74, 0.12);
+    border: 1px solid #FDCBBA;
+    max-width: 420px;
+    width: 100%;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* הוספת רווח קבוע בין חלקי התיבה */
+    gap: 20px;
+}
+
+.auth-header h2 {
+    color: #D96C4A;
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.auth-container > p {
+    /* המרווח מהכותרת (ברוכים הבאים) */
+    margin-top: 30px;    
+    
+    /* המרווח מהכפתור (התחברות עם גוגל) */
+    margin-bottom: 5px; 
+    
+    /* עיצוב הטקסט עצמו */
+    color: #6b584d;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    display: block;
+}
+
+/* כפתור גוגל */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: #ffffff;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+    border-radius: 50px;
+    padding: 12px 24px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    margin: 20px 0;
+}
+
+.google-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.google-btn:hover {
+    border-color: #FDCBBA;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.auth-footer {
+    color: #a08d82;
+    font-size: 0.85rem;
+}
+/* =========================================
+   אזור הוספת סדרה
+========================================= */
+
+/* עיצוב לדף הטפסים */
+.form-page-main {
+    color: #D96C4A;
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* סידור הרווחים בין השדות */
+.form-group {
+    display: flex;
+    flex-direction: column; /* גורם לתווית להיות מעל השדה */
+    margin-bottom: 20px; /* רווח קבוע בין שדה לשדה */
+    gap: 8px; /* רווח קטן בין התווית לשדה עצמו */
+}
+
+/* עיצוב התוויות (Labels) */
+.form-group label {
+    font-weight: bold;
+    color: #df7555;
+}
+
+/* עיצוב שדות ההזנה (Inputs, Select, Textarea) */
+input, select, textarea {
+    color: #b17968;
+    padding: 10px;
+    border: 1px solid #FDCBBA;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+/* עיצוב השדות בזמן לחיצה */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #D96C4A; 
+    box-shadow: 0 0 8px rgba(217, 108, 74, 0.2);
+    transition: all 0.3s ease; /* הופך את הופעת הצבע לחלקה יותר */
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px; /* רווח בין הכפתורים */
+    margin-top: 10px;
+}
+
+/* האזור שעוטף את הכפתורים */
+.form-actions {
+    display: flex;
+    gap: 15px; 
+    margin-top: 10px;
+}
+
+/* עיצוב הבסיס לשני הכפתורים */
+.form-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 24px; /* פינות עגולות כמו בגוגל */
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease; /* לאנימציה חלקה */
+}
+
+/* כפתור שמירה - הצבע הכתום */
+.save-btn {
+    background-color: #D96C4A; /* צבע כתום */
+    color: white; /* טקסט לבן */
+}
+
+.save-btn:hover {
+    background-color: #b04d30; /* כתום כהה יותר במעבר עכבר */
+    box-shadow: 0 4px 12px rgba(217, 108, 74, 0.4); /* צל כתמתם */
+}
+
+/* כפתור ביטול - הצבע האפור */
+.cancel-btn {
+    background-color: #eeeeee; /* רקע אפור בהיר */
+    color: #4A3B32; /* טקסט חום כהה כמו בשאר האתר */
+}
+
+.cancel-btn:hover {
+    background-color: #dddddd; /* אפור קצת יותר כהה במעבר עכבר */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* צל עדין */
+}
+
+/* עיצוב הרשימה הנפתחת */
+select {
+    cursor: pointer; /* משנה את העכבר ליד לחיצה */
+    appearance: none; /* מעלים את החץ המקורי של הדפדפן */
+    -webkit-appearance: none; /* תמיכה לדפדפנים ישנים */
+    -moz-appearance: none; /* תמיכה לדפדפנים ישנים */
+    
+    /* ציור חץ כתום*/
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D96C4A%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: left 15px center; /* שמים את החץ בצד שמאל כי האתר בעברית (RTL) */
+    background-size: 12px auto;
+    padding-left: 40px; /* עושה קצת רווח כדי שהטקסט לא יעלה על החץ */
+}
+
+/* עיצוב האופציות ברשימה (השורות שנפתחות למטה) */
+option {
+    background-color: #ffffff;
+    color: #4A3B32;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+/* אזור דירוג הכוכבים */
+.rating {
+    display: inline-flex;
+    flex-direction: row-reverse; /* הופך את הסדר כדי שהצביעה תעבוד נכון מימין לשמאל */
+    justify-content: flex-end;
+    gap: 5px;
+    margin-top: -10px;
+}
+
+/* העלמת כפתורי הרדיו המקוריים */
+.rating input[type="radio"] {
+    display: none;
+}
+
+/* עיצוב הכוכבים עצמם */
+.rating label {
+    font-size: 40px;
+    line-height: 1;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/*כשעוברם עם העכבר או לוחצים על כוכב הוא נצבע בצהוב*/
+.rating input[type="radio"]:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #FFD700;
+    text-shadow: 0 2px 12px rgba(255, 215, 0, 0.6);
+}
+
+/* עיצוב הודעת ההצלחה */
+#success-message {
+    background-color: #9de0a0;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: opacity 0.5s ease;
+}
+
+/* המחלקה שמסתירה את ההודעה כברירת מחדל */
+.hidden {
+    display: none;
+}
+
+/* =========================================
+   אזור קטלוג הסדרות המלא
+========================================= */
+
+.filter-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.filter-bar {
+    display: none;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-bar.open {
+    display: flex; 
+}
+
+.filter-bar select, .filter-bar .cancel-btn {
+    height: 40px;
+}
+.open-filter-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background-color: #D96C4A;
+    color: white;
+}
+
+.open-filter-btn:hover {
+    box-shadow: 0 4px 12px rgba(217, 108, 74, 0.4);
+}
+
+.cancel-btn {
+    color: #b17968;
+    border-radius: 24px;
+    border:1px solid #FDCBBA;
+    width: fit-content;
+    background-color:#FFFFFF;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-family: inherit;
+    transition: all 0.3s ease;
+    padding: 12px;
+}
+
+.cancel-btn:hover {
+    background-color:#FFFFFF;
+    transition: all 0.3s ease;
+    border-color: #e28e74; 
+}
+
+/* =========================================
+   עיצוב קטלוג הסדרות
+========================================= */
+
+/* הקונטיינר הראשי שעוטף את כל הסדרות */
+#series-catalog-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+    padding: 10px;
+}
+
+/* עיצוב כרטיסיית סדרה בודדת */
+.series {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #FDCBBA;
+    box-shadow: 0 4px 15px rgba(217, 108, 74, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ריחוף מעל כרטיסייה */
+.series:hover {
+    box-shadow: 0 8px 25px rgba(217, 108, 74, 0.15);
+    border-color: #D96C4A;
+}
+
+/* עיצוב התמונה בתוך הכרטיסייה */
+.series img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background-color: #f9f9f9;
+}
+
+/* עיצוב שם הסדרה */
+.series h3 {
+    color: #D96C4A;
+    font-size: 1.25rem;
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+}
+
+/* עיצוב למידע נוסף*/
+.series h4 {
+    background-color: rgb(231, 137, 102);
+    color: #FFFFFF;
+    padding: 5px 15px;
+    border-radius: 50px;
+    cursor: pointer; 
+    box-shadow: 0 4px 10px rgba(217, 108, 74, 0.3);
+    transition: all 0.3s ease; 
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 10px auto 5px;
+    width: fit-content;
+    display: block;
+}
+
+.series h4:hover {
+    background-color:  #D96C4A;
+}
+
+/* כשלוחצים למידע נוסף*/
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    text-align: center;
+}
+
+.modal-content img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================
+   עיצוב חלון מידע נוסף
+========================================= */
+
+/* רקע כהה וחצי-שקוף שמכסה את כל המסך */
+#series-modal {
+    display: none; /* מוסתר כברירת מחדל */
+    position: fixed; /* מקבע את זה למסך גם אם גוללים */
+    z-index: 9999; /* מוודא שזה תמיד מעל הכל (כולל ההדר) */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(74, 59, 50, 0.6);
+    backdrop-filter: blur(3px);
+}
+
+/* הקופסה הלבנה שקופצת באמצע */
+.modal-content {
+    background-color: #ffffff;
+    margin: 10% auto;
+    padding: 30px;
+    border: 2px solid #FDCBBA;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    color: #4A3B32;
+}
+
+/* אנימציה לקפיצה של המודל */
+@keyframes modalPop {
+    from {transform: translateY(-50px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
+
+/* כפתור הסגירה */
+.close-btn {
+    top: -5px; 
+    color: #D96C4A;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+    z-index: 10; 
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #b04d30;
+    text-decoration: none;
+}
+
+/* עיצוב הטקסט בתוך החלון */
+#modal-title {
+    color: #D96C4A;
+    margin-top: 0;
+    font-size: 1.8rem;
+}
+
+#modal-description {
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* עיצוב התמונה בתוך הפופ-אפ */
+#modal-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* מוודא שהתמונה לא נמרחת */
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ffcdb8;
+}
