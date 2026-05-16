@@ -700,12 +700,22 @@ option {
     margin-bottom: 15px;
 }
 
+/* כפתור הסגירה */
 .close-btn {
+    top: -11px; 
+    color: #D96C4A;
     position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 30px;
+    right: 10px;
+    font-size: 35px;
+    font-weight: bold;
     cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #b04d30;
+    text-decoration: none;
 }
 
 .hidden {
@@ -747,24 +757,6 @@ option {
 @keyframes modalPop {
     from {transform: translateY(-50px); opacity: 0;}
     to {transform: translateY(0); opacity: 1;}
-}
-
-/* כפתור הסגירה */
-.close-btn {
-    top: -5px; 
-    color: #D96C4A;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.2s;
-    line-height: 1;
-    z-index: 10; 
-}
-
-.close-btn:hover,
-.close-btn:focus {
-    color: #b04d30;
-    text-decoration: none;
 }
 
 /* עיצוב הטקסט בתוך החלון */
