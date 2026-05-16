@@ -181,6 +181,28 @@ function openModal(series) {
     document.getElementById('series-modal').classList.remove('hidden');
 }
 
+// פונקציה להצגת הסדרה האחרונה שנוספה בדף הבית
+function renderLatestSeries() {
+    const latestSection = document.getElementById('latest-suggestion');
+    const articleElement = latestSection ? latestSection.querySelector('article') : null;
+    
+    // אם אנחנו לא בדף הבית או שעדיין אין סדרות במערך, נפסיק
+    if (!latestSection || !articleElement || seriesData.length === 0) return;
+
+    // מציאת הסדרה עם ה-ID הכי גדול (שזה בעצם התאריך הכי חדש)
+    const latestSeries = seriesData.reduce((prev, current) => {
+        return (prev.id > current.id) ? prev : current;
+    });
+
+    // מחליפים את נתוני הדמה בנתונים האמיתיים של הסדרה
+    articleElement.innerHTML = `
+        <img src="${latestSeries.image || 'https://placehold.co/150x100'}" alt="${latestSeries.title}" width="150"> 
+        <h3>${latestSeries.title}</h3>
+        <p>ז'אנר: <strong>${latestSeries.genre || 'כללי'}</strong></p> 
+        <a href="javascript:void(0)" class="more-info-btn" data-id="${latestSeries.id}">למידע נוסף</a>
+    `;
+}
+
 // פונקציה לסגירת המודל
 function setupModalClosing() {
     const closeModal = document.getElementById('close-modal');
@@ -322,4 +344,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupSearch(); 
     setupAddSeriesForm();
     setupModalClosing();
+    renderLatestSeries();
 });
