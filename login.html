@@ -1,35 +1,56 @@
 <!DOCTYPE html>
+<!-- הצהרה על סוג המסמך כדי שהדפדפן יזהה שזה מסמך HTML5 -->
 <html lang="he" dir="rtl">
+<!-- פתיחת מסמך HTML עם שפה עברית וכיוון כתיבה מימין לשמאל -->
 <head>
+    <!-- אזור ההגדרות והמידע של הדף -->
     <meta charset="UTF-8">
+    <!-- הגדרת קידוד UTF-8 לתמיכה בעברית ותווים מיוחדים -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- התאמת תצוגת האתר למסכים שונים ולמובייל -->
     <title>BingeList - התחברות</title>
+    <!-- כותרת הדף שמופיעה בלשונית הדפדפן -->
     <link rel="stylesheet" href="styles.css">
+    <!-- חיבור קובץ העיצוב CSS -->
 </head>
 <body>
+    <!-- גוף הדף -->
     <header id="main-header"></header>
+    <!-- אזור הכותרת העליונה של האתר, מתמלא דרך JavaScript -->
 
     <script type="module" src="script.js"></script>
+    <!-- טעינת קובץ JavaScript כמודול -->
 
-<!-- האזור העליון של האתר - header -->
+    <!-- האזור העליון של האתר - header -->
 
     <main class="auth-page-main">
+        <!-- האזור המרכזי של דף ההתחברות -->
         <section class="auth-container">
+            <!-- קונטיינר שמכיל את כל אזור ההתחברות -->
             <div class="auth-header">
+                <!-- אזור הכותרת של טופס ההתחברות -->
                 <h2>ברוכים הבאים</h2>
+                <!-- כותרת ברוכים הבאים למשתמש -->
             </div>
-        <p>התחברו באמצעות חשבון הגוגל שלכם כדי להתחיל לנהל את רשימות הצפייה</p>
+
+            <p>התחברו באמצעות חשבון הגוגל שלכם כדי להתחיל לנהל את רשימות הצפייה</p>
+            <!-- טקסט הסבר על דרך ההתחברות -->
         
             <button class="google-btn" id="google-login-btn">
+                <!-- כפתור התחברות באמצעות Google -->
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
+                <!-- אייקון של Google בתוך הכפתור -->
                 <span>התחברות עם Google</span>
+                <!-- טקסט הכפתור -->
             </button>
             
             <div class="auth-footer">
+                <!-- אזור תחתון עם הערת תנאי שימוש -->
                 <small>בלחיצה על התחברות, הנך מסכים לתנאי השימוש באתר.</small>
+                <!-- טקסט קטן עם תנאי השימוש -->
             </div>
         </section>
     </main>
 
 </body>
-</html>
+</html> 

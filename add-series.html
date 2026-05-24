@@ -1,75 +1,128 @@
-<!DOCTYPE html> 
-<html lang="he" dir="rtl"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <link rel="stylesheet" href="styles.css"> 
-        <title>BingeList - דף הבית</title>
-    </head>
+<!DOCTYPE html>
+<!-- הצהרה על סוג המסמך כדי שהדפדפן יזהה שזה מסמך HTML5 -->
+<html lang="he" dir="rtl">
+<!-- פתיחת מסמך HTML עם שפה עברית וכיוון כתיבה מימין לשמאל -->
+<head>
+    <!-- אזור ההגדרות והמידע של הדף -->
+    <meta charset="UTF-8">
+    <!-- הגדרת קידוד UTF-8 לתמיכה בעברית ותווים מיוחדים -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- התאמת תצוגת האתר למסכים שונים ולמכשירים ניידים -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- חיבור קובץ העיצוב CSS -->
+    <title>BingeList - דף הבית</title>
+    <!-- כותרת הדף שמופיעה בלשונית הדפדפן -->
+</head>
 <!-- הגדרות האתר -->
 
 <body>
+    <!-- גוף האתר -->
     <header id="main-header"></header>
+    <!-- אזור הכותרת העליונה של האתר, מתמלא דרך JavaScript -->
 
     <script type="module" src="script.js"></script>
-<!-- האזור העליון של האתר - header -->
+    <!-- טעינת קובץ JavaScript כמודול -->
+
+    <!-- האזור העליון של האתר - header -->
 
     <main class="form-page-main">
+        <!-- האזור המרכזי של טופס הוספת סדרה -->
         <h1>הוספת סדרה חדשה</h1>
-            <form id="add-series-form"> 
-                <div class="form-group">
-                    <label for="title">שם הסדרה:</label> 
-                    <input type="text" id="title" name="title" placeholder="הקלד שם סדרה..." required> 
-                </div>
+        <!-- כותרת ראשית של הדף -->
 
-                <div class="form-group">
-                    <label for="images">תמונת הסדרה:</label> 
-                    <input type = "url" id = "images" name = "images" placeholder="הכנס תמונה לסדרה" required>
-                </div>
+        <form id="add-series-form">
+            <!-- טופס להוספת סדרה חדשה -->
 
-                <div class="form-group">
-                    <label for = "genre">בחירת ז'אנר:</label>
-                    <select id="genre" name="genre">
-                        <option disabled selected hidden>בחירת ז'אנר</option>
-                        <option value="romance">רומנטיקה</option>
-                        <option value="drama">דרמה</option>
-                        <option value="action">אקשן</option>
-                        <option value="comedy">קומדיה</option>
-                        <option value="horror">אימה</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <!-- קבוצה של שדה שם הסדרה -->
+                <label for="title">שם הסדרה:</label>
+                <!-- תווית שמחוברת לשדה הקלט -->
+                <input type="text" id="title" name="title" placeholder="הקלד שם סדרה..." required>
+                <!-- שדה טקסט להזנת שם הסדרה, חובה למילוי -->
+            </div>
 
-                <div class="form-group">
-                    <label for="description">תיאור הסדרה:</label>
-                    <textarea id="description" name="description" rows="4" placeholder="הכניס תקציר קצר של הסדרה..."></textarea>
-                </div>
+            <div class="form-group">
+                <!-- קבוצה של שדה תמונת הסדרה -->
+                <label for="images">תמונת הסדרה:</label>
+                <!-- תווית לשדה כתובת התמונה -->
+                <input type="url" id="images" name="images" placeholder="הכנס תמונה לסדרה" required>
+                <!-- שדה להזנת קישור לתמונה, חובה למילוי -->
+            </div>
 
-                <div class="form-group">
+            <div class="form-group">
+                <!-- קבוצה של בחירת ז'אנר -->
+                <label for="genre">בחירת ז'אנר:</label>
+                <!-- תווית לרשימת בחירת הז'אנר -->
+                <select id="genre" name="genre">
+                    <!-- רשימת אפשרויות לבחירת ז'אנר -->
+                    <option disabled selected hidden>בחירת ז'אנר</option>
+                    <!-- טקסט ברירת מחדל -->
+                    <option value="romance">רומנטיקה</option>
+                    <!-- אפשרות לרומנטיקה -->
+                    <option value="drama">דרמה</option>
+                    <!-- אפשרות לדרמה -->
+                    <option value="action">אקשן</option>
+                    <!-- אפשרות לאקשן -->
+                    <option value="comedy">קומדיה</option>
+                    <!-- אפשרות לקומדיה -->
+                    <option value="horror">אימה</option>
+                    <!-- אפשרות לאימה -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <!-- קבוצה של תיאור הסדרה -->
+                <label for="description">תיאור הסדרה:</label>
+                <!-- תווית לשדה התיאור -->
+                <textarea id="description" name="description" rows="4" placeholder="הכניס תקציר קצר של הסדרה..."></textarea>
+                <!-- אזור טקסט להזנת תקציר הסדרה -->
+            </div>
+
+            <div class="form-group">
+                <!-- קבוצה של דירוג הסדרה -->
                 <label>דירוג הסדרה:</label>
+                <!-- כותרת לאזור הדירוג -->
                 <div class="rating">
+                    <!-- אזור בחירת הדירוג בכוכבים -->
+
                     <input type="radio" id="star5" name="rating" value="5">
+                    <!-- כפתור בחירה לדירוג 5 -->
                     <label for="star5" title="5 כוכבים">★</label>
+                    <!-- תצוגת כוכב לדירוג 5 -->
 
                     <input type="radio" id="star4" name="rating" value="4">
+                    <!-- כפתור בחירה לדירוג 4 -->
                     <label for="star4" title="4 כוכבים">★</label>
+                    <!-- תצוגת כוכב לדירוג 4 -->
 
                     <input type="radio" id="star3" name="rating" value="3">
+                    <!-- כפתור בחירה לדירוג 3 -->
                     <label for="star3" title="3 כוכבים">★</label>
+                    <!-- תצוגת כוכב לדירוג 3 -->
 
                     <input type="radio" id="star2" name="rating" value="2">
+                    <!-- כפתור בחירה לדירוג 2 -->
                     <label for="star2" title="2 כוכבים">★</label>
+                    <!-- תצוגת כוכב לדירוג 2 -->
 
                     <input type="radio" id="star1" name="rating" value="1" required>
+                    <!-- כפתור בחירה לדירוג 1, חובה לבחור דירוג -->
                     <label for="star1" title="1 כוכב">★</label>
+                    <!-- תצוגת כוכב לדירוג 1 -->
                 </div>
             </div>
 
-                <div class="form-actions">
-                    <button type="submit" class="save-btn">שמירה</button> 
-                    <button type="button" class="cancel-btn">ביטול</button> 
-                </div>
+            <div class="form-actions">
+                <!-- אזור הכפתורים של הטופס -->
+                <button type="submit" class="save-btn">שמירה</button>
+                <!-- כפתור לשליחת ושמירת הטופס -->
+                <button type="button" class="cancel-btn">ביטול</button>
+                <!-- כפתור לביטול הפעולה -->
+            </div>
+
             <div id="success-message" class="hidden">הסדרה נוספה בהצלחה! 🍿</div>
-            </form>
+            <!-- הודעת הצלחה מוסתרת שמופיעה לאחר הוספת סדרה -->
+        </form>
     </main>
 </body>
 </html>

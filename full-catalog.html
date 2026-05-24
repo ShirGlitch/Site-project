@@ -1,72 +1,117 @@
-<!DOCTYPE html> 
-<html lang="he" dir="rtl"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <link rel="stylesheet" href="styles.css"> 
-        <title>BingeList - קטלוג הסדרות המלא</title>
-    </head>
+<!DOCTYPE html>
+<!-- הצהרה על סוג המסמך כדי שהדפדפן יזהה שזה מסמך HTML5 -->
+<html lang="he" dir="rtl">
+<!-- פתיחת מסמך HTML עם שפה עברית וכיוון כתיבה מימין לשמאל -->
+<head>
+    <!-- אזור ההגדרות והמידע של הדף -->
+    <meta charset="UTF-8">
+    <!-- הגדרת קידוד UTF-8 לתמיכה בעברית ותווים מיוחדים -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- התאמת תצוגת האתר למסכים שונים ולמכשירים ניידים -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- חיבור קובץ העיצוב CSS -->
+    <title>BingeList - קטלוג הסדרות המלא</title>
+    <!-- כותרת הדף שמופיעה בלשונית הדפדפן -->
+</head>
 <!-- הגדרות האתר -->
 
 <body>
+    <!-- גוף האתר -->
     <header id="main-header"></header>
+    <!-- אזור הכותרת העליונה של האתר, מתמלא דרך JavaScript -->
 
     <script type="module" src="script.js"></script>
-<!-- האזור העליון של האתר - header -->
+    <!-- טעינת קובץ JavaScript כמודול -->
 
-    <main> 
-        <section id="quick-add"> 
-            <h2>לא מצאת סדרה? הוסף סדרה משלך</h2> 
-            <form action="#" method="get"> 
-                <label for="quickSearch">שם הסדרה:</label> 
-                <input type="text" id="quickSearch" name="seriesName" placeholder="הקלד שם סדרה..."> 
-                <button type="submit">חפש/הוסף</button> 
-                </form>
+    <!-- האזור העליון של האתר - header -->
+
+    <main>
+        <!-- התוכן המרכזי של האתר -->
+        <section id="quick-add">
+            <!-- אזור להוספה מהירה של סדרה -->
+            <h2>לא מצאת סדרה? הוסף סדרה משלך</h2>
+            <!-- כותרת שמזמינה את המשתמש להוסיף סדרה -->
+            <form action="#" method="get">
+                <!-- טופס לשליחת חיפוש או הוספת סדרה -->
+                <label for="quickSearch">שם הסדרה:</label>
+                <!-- תווית שמחוברת לשדה הקלט -->
+                <input type="text" id="quickSearch" name="seriesName" placeholder="הקלד שם סדרה...">
+                <!-- שדה טקסט להזנת שם הסדרה -->
+                <button type="submit">חפש/הוסף</button>
+                <!-- כפתור לשליחת הטופס -->
+            </form>
             
-            <p>או <a href="add-series.html">לחץ כאן</a> כדי למלא טופס הוספה מלא.</p> 
-            </section>
-<!-- תחילת התוכן המרכזי של האתר, טופס לחיפוש, הוספה מהירה של סדרה. -->
+            <p>או <a href="add-series.html">לחץ כאן</a> כדי למלא טופס הוספה מלא.</p>
+            <!-- קישור לטופס הוספה מפורט -->
+        </section>
+
+        <!-- תחילת התוכן המרכזי של האתר, טופס לחיפוש, הוספה מהירה של סדרה. -->
         <div class="filter-wrapper">
+            <!-- מעטפת של אזור הסינון -->
             <button type="button" class="open-filter-btn">סינון מתקדם</button>
+            <!-- כפתור לפתיחת אפשרויות סינון -->
 
-         <div class = "filter-bar">
+            <div class="filter-bar">
+                <!-- אזור המכיל את כל אפשרויות הסינון -->
 
-                    <select id="genre-filter" name="genre-filter">
-                        <option disabled selected hidden>סינון ג'אנר</option>
-                        <option value="romance">רומנטיקה</option>
-                        <option value="drama">דרמה</option>
-                        <option value="action">אקשן</option>
-                        <option value="comedy">קומדיה</option>
-                        <option value="horror">אימה</option>
-                    </select>
+                <select id="genre-filter" name="genre-filter">
+                    <!-- רשימת בחירה לסינון לפי ז'אנר -->
+                    <option disabled selected hidden>סינון ג'אנר</option>
+                    <!-- טקסט ברירת מחדל שלא ניתן לבחור -->
+                    <option value="romance">רומנטיקה</option>
+                    <!-- אפשרות לסינון רומנטיקה -->
+                    <option value="drama">דרמה</option>
+                    <!-- אפשרות לסינון דרמה -->
+                    <option value="action">אקשן</option>
+                    <!-- אפשרות לסינון אקשן -->
+                    <option value="comedy">קומדיה</option>
+                    <!-- אפשרות לסינון קומדיה -->
+                    <option value="horror">אימה</option>
+                    <!-- אפשרות לסינון אימה -->
+                </select>
 
-                    <select id="rating-filter" name="rating-filter">
-                        <option disabled selected hidden>סינון דירוג</option>
-                        <option value="1">1</option>                        
-                        <option value="2">2</option>  
-                        <option value="3">3</option>                        
-                        <option value="4">4</option> 
-                        <option value="5">5</option>
-                    </select>
+                <select id="rating-filter" name="rating-filter">
+                    <!-- רשימת בחירה לסינון לפי דירוג -->
+                    <option disabled selected hidden>סינון דירוג</option>
+                    <!-- טקסט ברירת מחדל -->
+                    <option value="1">1</option>                        
+                    <!-- דירוג 1 -->
+                    <option value="2">2</option>  
+                    <!-- דירוג 2 -->
+                    <option value="3">3</option>                        
+                    <!-- דירוג 3 -->
+                    <option value="4">4</option>
+                    <!-- דירוג 4 -->
+                    <option value="5">5</option>
+                    <!-- דירוג 5 -->
+                </select>
 
-                <button type="reset" class="cancel-btn">ניקוי סינונים</button> 
+                <button type="reset" class="cancel-btn">ניקוי סינונים</button>
+                <!-- כפתור לאיפוס כל הסינונים -->
+            </div>
         </div>
-        </div>
 
-        <section id = "series-catalog-container">
-
-
+        <section id="series-catalog-container">
+            <!-- אזור שבו יוצגו כל הסדרות בקטלוג -->
         </section>
     </main>
-<!-- מידע נוסף -->
+
+    <!-- מידע נוסף -->
     <div id="series-modal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <span id="close-modal" class="close-btn">&times;</span>
-        <img id="modal-image" src="" alt="Series Image">
-        <h2 id="modal-title"></h2>
-        <div id="modal-rating"></div>
-        <p id="modal-description"></p>
+        <!-- חלון קופץ מוסתר להצגת מידע נוסף על סדרה -->
+        <div class="modal-content">
+            <!-- תוכן החלון הקופץ -->
+            <span id="close-modal" class="close-btn">&times;</span>
+            <!-- כפתור לסגירת החלון -->
+            <img id="modal-image" src="" alt="Series Image">
+            <!-- תמונת הסדרה שתוצג -->
+            <h2 id="modal-title"></h2>
+            <!-- שם הסדרה בתוך החלון -->
+            <div id="modal-rating"></div>
+            <!-- אזור להצגת דירוג הסדרה -->
+            <p id="modal-description"></p>
+            <!-- תיאור הסדרה -->
+        </div>
     </div>
-</div>
 </body>
 </html>

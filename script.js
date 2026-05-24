@@ -1,10 +1,13 @@
+// ייבוא החיבורים למסד הנתונים ולמערכת האימות מהקובץ firebase.js
 import { db, auth } from './firebase.js';
+// ייבוא פונקציות ספציפיות מ-Firestore שדרושות לשליפה והוספה של נתונים
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 function loadHeader() {
-    // 1. זיהוי הדף הנוכחי
+    // חילוץ שם הקובץ הנוכחי מהכתובת בדפדפן. אם ריק, ברירת המחדל היא index.html
     const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
+    // שמירת כל מבנה ה-HTML של תפריט הניווט העליון (Header) בתוך משתנה טקסט
     const headerHTML = `
         <div class="header-left-part"> 
             <strong>BingeList</strong>
@@ -24,61 +27,69 @@ function loadHeader() {
         </div>
     `;
 
+    // איתור אלמנט ה-Header במסמך ה-HTML
     const headerElement = document.getElementById("main-header");
+    // אם האלמנט קיים בעמוד, הזרקת ה-HTML שנשמר במשתנה לתוכו
     if (headerElement) {
         headerElement.innerHTML = headerHTML;
     }
 }
 
-// מערך לסדרות האתר
+// יצירת מערך ריק שישמש לאחסון מקומי של כל הסדרות שיימשכו ממסד הנתונים
 let seriesData = [];
 
-// משיכת הנתונים מהפייר בייס
+// פונקציה אסינכרונית לשליפת נתונים ממסד הנתונים (כי מדובר בבקשת רשת שלוקחת זמן)
 async function loadSeriesFromFirestore() {
     try {
         console.log("מתחיל למשוך נתונים מ-Firebase...");
+        // שליחת בקשה למשיכת כל המסמכים מתוך האוסף (collection) שנקרא "series"
         const querySnapshot = await getDocs(collection(db, "series"));
         
-        seriesData = []; // איפוס המערך
+        seriesData = []; // איפוס המערך כדי למנוע כפילויות במידה והפונקציה רצה שוב
         
+        // מעבר בלולאה על כל מסמך שחזר ממסד הנתונים
         querySnapshot.forEach((doc) => {
             console.log("נמצאה סדרה בענן:", doc.data());
+            // הוספת הנתונים של המסמך (doc.data) לתוך המערך המקומי
             seriesData.push(doc.data());
         });
 
-        // כאן הקסם קורה: קוראים לפונקציה שלך עם המערך המלא
         console.log("מעביר את הנתונים לציור על המסך...");
+        // קריאה לפונקציה שמעדכנת את תצוגת ה-HTML עם הנתונים שנמשכו
         renderSeries(seriesData); 
 
     } catch (error) {
+        // במידה ויש שגיאה בבקשת הרשת, הדפסתה לקונסול
         console.error("שגיאה בטעינת הנתונים: ", error);
     }
 }
 
 function setupAddSeriesForm() {
-    // תופסים את הטופס ושומרים במשתנה
+    // איתור טופס הוספת הסדרה לפי ה-ID שלו
     const addForm = document.getElementById('add-series-form');
 
-    // אם הטופס לא קיים בדף הנוכחי, פשוט תצא מהפונקציה ואל תעשה כלום
+    // אם הטופס לא קיים בדף הנוכחי, הפונקציה עוצרת כאן כדי למנוע שגיאות
     if (!addForm) return;
 
-    // מוסיפים למשתנה מאזין
+    // הוספת מאזין לאירוע 'submit' (שליחת הטופס)
     addForm.addEventListener('submit', async (event) => {
-        // עצירת הדף מרענון
+        // עצירת התנהגות ברירת המחדל של הדפדפן (מונעת רענון של העמוד)
         event.preventDefault();
 
-        // שאיבת ושמירת הנתונים
+        // משיכת הערכים שהוזנו בשדות הטופס
         const title = document.getElementById('title').value;
         const image = document.getElementById('images').value;
         const genre = document.getElementById('genre').value;
         const description = document.getElementById('description').value;
         
-        // שאיבת הדירוג המסומן והפיכתו למספר בטוח
+        // איתור כפתור הרדיו של הדירוג שנבחר
         const selectedRating = document.querySelector('input[name="rating"]:checked');
+        // המרת ערך הדירוג למספר שלם, או הגדרתו כ-0 אם לא נבחר כלום
         const ratingValue = selectedRating ? parseInt(selectedRating.value) : 0;
 
+        // בניית אובייקט חדש המכיל את כל הנתונים, מוכן לשליחה לענן
         const newSeries = {
-            id: Date.now(), 
+            id: Date.now(),  // שימוש בחותמת הזמן הנוכחית כמזהה ייחודי לסדרה
             title: title,
             genre: genre,
             rating: ratingValue,
@@ -86,79 +97,92 @@ function setupAddSeriesForm() {
             description: description
         };
 
-        // ניסיון לשמור בענן
         try {
+            // בקשה להוספת האובייקט החדש כמסמך לאוסף "series" בפיירבייס
             await addDoc(collection(db, "series"), newSeries);
             
             console.log("הסדרה נשמרה בענן בהצלחה!");
             
-            // הודעת הצלחה למשתמש
+            // איתור אלמנט הודעת ההצלחה והצגתו על ידי הסרת קלאס ההסתרה
             const successMsg = document.getElementById('success-message');
             successMsg.classList.remove('hidden');
 
-            // משתמשים בטיימר כדי להחזיר את ההסתרה אחרי 3 שניות
+            // הפעלת טיימר המסתיר בחזרה את הודעת ההצלחה לאחר 3 שניות
             setTimeout(function() {
                 successMsg.classList.add('hidden');
             }, 3000);
             
-            // ניקוי הטופס פעם אחת בלבד
+            // ניקוי כל השדות בטופס לאחר שליחה מוצלחת
             addForm.reset();
 
         } catch (error) {
+            // טיפול בשגיאה במקרה שהשמירה נכשלה
             console.error("שגיאה בהוספת הסדרה: ", error);
             alert("הייתה בעיה בשמירת הסדרה, אנא נסו שוב.");
         }
     });
 }
 
-// פונקציה לטופס החיפוש המהיר בדף הבית
+// פונקציה לטיפול בחיפוש המהיר
 function setupSearch() {
+    // איתור שדה החיפוש, אזור התצוגה, ואזור ההצעה האחרונה
     const searchInput = document.getElementById('quickSearch');
     const container = document.getElementById('series-catalog-container');
     const latestSection = document.getElementById('latest-suggestion');
+    // איתור הטופס שעוטף את שדה החיפוש
     const searchForm = searchInput ? searchInput.closest('form') : null;
+    
+    // עצירת הפונקציה אם אלמנטים הכרחיים חסרים בדף
     if (!searchInput || !container) return;
-// מניעת רענון הדף בלחיצה על Enter
+
+    // מניעת רענון דף כאשר לוחצים אנטר בתוך שדה החיפוש
     if (searchForm) {
         searchForm.addEventListener('submit', (e) => e.preventDefault());
     }
 
+    // הוספת מאזין המופעל בכל פעם שמוקלד תו בשדה החיפוש
     searchInput.addEventListener('input', (e) => {  
+        // ניקוי רווחים מההתחלה והסוף, והמרת הטקסט לאותיות קטנות (לאנגלית)
         const searchTerm = e.target.value.trim().toLowerCase();
 
-        // אם החיפוש ריק להסתיר את הסדרות
+        // בדיקה האם שדה החיפוש ריק
         if (searchTerm === "") {
-            container.innerHTML = ""; 
-            container.style.display = "none"; 
+            container.innerHTML = ""; // ניקוי אזור התוצאות
+            container.style.display = "none"; // הסתרת אזור התוצאות
+            // החזרת אזור "הסדרה האחרונה" לתצוגה אם קיים
             if (latestSection) latestSection.style.display = "block"; 
             return;
         }
-        // אם יש טקסט בחיפוש
+        
+        // סינון המערך הראשי והחזרת רק סדרות שהכותרת שלהן מכילה את טקסט החיפוש
         const filteredSeries = seriesData.filter(series => 
             series.title.toLowerCase().includes(searchTerm)
         );
 
         if (filteredSeries.length > 0) {
+            // אם נמצאו תוצאות, הסתרת ההצעה האחרונה
             if (latestSection) latestSection.style.display = "none";
-            container.classList.add('show-results'); // הצגת הקטלוג
+            container.classList.add('show-results'); 
+            // ציור התוצאות המסוננות על המסך
             renderSeries(filteredSeries);
         } else {
-            // אם חיפשנו ואין תוצאות
+            // במקרה שאין תוצאות, הצגת הודעה מתאימה בתוך הקונטיינר
             container.innerHTML = "<p class='no-results-msg'>לא מצאנו סדרה כזו... אולי תוסיפו אותה?</p>";
             container.classList.add('show-results');
         }
     });
 }
 
-//פונקציה להוספת הסדרות לדף הקטלוג
+// פונקציה לייצור אלמנטי HTML והצגתם בקונטיינר
 function renderSeries(data) {
     const container = document.getElementById('series-catalog-container');
-    if (!container) return;
+    if (!container) return; // עצירה אם הקונטיינר אינו קיים בדף
 
-    container.innerHTML = ""; // ניקוי הקונטיינר
+    container.innerHTML = ""; // ניקוי התוכן הקודם בקונטיינר לפני ציור מחדש
 
-    // ציור כל הכרטיסיות
+    // מעבר על מערך הנתונים (המלא או המסונן) שהתקבל כארגומנט
     data.forEach(series => {
+        // יצירת מבנה HTML עבור כל כרטיסיית סדרה. שימוש בתמונת placeholder אם אין תמונה.
         const cardHTML = `
             <div class="series">
                 <img src="${series.image || 'https://placehold.co/200x300'}" alt="${series.title}">
@@ -167,34 +191,38 @@ function renderSeries(data) {
                 <h4 class="more-info-btn" data-id="${series.id}">למידע נוסף</h4>
             </div>
         `;
+        // שרשור ה-HTML שנוצר לתוך הקונטיינר
         container.innerHTML += cardHTML;
     });
 }
 
-// פונקציה לפתיחת המודל
+// פונקציה להזרקת נתונים ספציפיים לתוך המודל
 function openModal(series) {
+    // השמת ערכי הסדרה לתוך אלמנטי הטקסט והתמונה במודל
     document.getElementById('modal-title').innerText = series.title;
     document.getElementById('modal-description').innerText = series.description;
     document.getElementById('modal-image').src = series.image;
     document.getElementById('modal-rating').innerText = `דירוג: ⭐ ${series.rating}/5`;
     
+    // הצגת המודל על ידי הסרת קלאס ההסתרה
     document.getElementById('series-modal').classList.remove('hidden');
 }
 
-// פונקציה להצגת הסדרה האחרונה שנוספה בדף הבית
+// פונקציה לאיתור והצגת הסדרה החדשה ביותר
 function renderLatestSeries() {
+    // איתור אזור "ההצעה האחרונה" ואלמנט ה-article בתוכו
     const latestSection = document.getElementById('latest-suggestion');
     const articleElement = latestSection ? latestSection.querySelector('article') : null;
     
-    // אם אנחנו לא בדף הבית או שעדיין אין סדרות במערך, נפסיק
+    // מניעת ריצה אם האלמנטים לא קיימים או שאין נתונים במערך
     if (!latestSection || !articleElement || seriesData.length === 0) return;
 
-    // מציאת הסדרה עם ה-ID הכי גדול (שזה בעצם התאריך הכי חדש)
+    // שימוש בפונקציית reduce כדי למצוא את האובייקט בעל ה-ID (חותמת הזמן) הגבוה ביותר
     const latestSeries = seriesData.reduce((prev, current) => {
         return (prev.id > current.id) ? prev : current;
     });
 
-    // מחליפים את נתוני הדמה בנתונים האמיתיים של הסדרה
+    // הזרקת פרטי הסדרה החדשה ביותר לתוך ה-HTML
     articleElement.innerHTML = `
         <img src="${latestSeries.image || 'https://placehold.co/150x100'}" alt="${latestSeries.title}" width="150"> 
         <h3>${latestSeries.title}</h3>
@@ -203,98 +231,106 @@ function renderLatestSeries() {
     `;
 }
 
-// פונקציה לסגירת המודל
+// פונקציה לטיפול באירועי סגירת המודל (Pop-up)
 function setupModalClosing() {
     const closeModal = document.getElementById('close-modal');
     const modal = document.getElementById('series-modal');
 
+    // הוספת מאזין לחיצה לכפתור ה-X, שמוסיף חזרה את קלאס ההסתרה
     if(closeModal) {
         closeModal.addEventListener('click', () => {
             modal.classList.add('hidden');
         });
     }
 
-    // סגירה בלחיצה מחוץ לקופסה הלבנה
+    // הוספת מאזין לחיצה על האובייקט הגלובלי window לסגירה בלחיצה בחוץ
     window.addEventListener('click', (event) => {
+        // בדיקה האם האלמנט שנלחץ הוא הרקע של המודל ולא התוכן הפנימי שלו
         if (event.target == modal) {
             modal.classList.add('hidden');
         }
     });
 }
 
-// פונקציה לניהול פתיחה וסגירה של סרגל הסינונים
+// פונקציה המנהלת את תפריט הסינונים בקטלוג
 function setupFilters() {
     const filterBar = document.querySelector('.filter-bar');
     const openBtn = document.querySelector('.open-filter-btn');
 
-// אלמנטים של הסינון
+    // איתור אלמנטי הבחירה לסינון
     const genreSelect = document.getElementById('genre-filter');
     const ratingSelect = document.getElementById('rating-filter');
     const resetBtn = document.querySelector('.filter-bar .cancel-btn');
 
+    // הוספת טוגל (הצגה/הסתרה) לסרגל הסינונים בלחיצה על הכפתור
     if (openBtn && filterBar) {
         openBtn.addEventListener('click', () => {
             filterBar.classList.toggle('open');
         });
     }
-// פונקציה שמבצעת את הסינון בפועל
+
+    // הפונקציה הפנימית שמבצעת את סינון הנתונים 
     function applyFilters() {
         const selectedGenre = genreSelect.value;
         const selectedRating = ratingSelect.value;
 
+        // יצירת מערך חדש המכיל רק אובייקטים שעומדים בתנאי הסינון
         const filteredData = seriesData.filter(series => {
-            // האם הז'אנר מתאים?
+            // בדיקה אם לא נבחר ז'אנר ("סינון...") או שהז'אנר תואם
             const genreMatch = selectedGenre.includes("סינון") || series.genre === selectedGenre;
             
-            // האם הדירוג מתאים?
+            // בדיקה אם לא נבחר דירוג או שהדירוג תואם
             const ratingMatch = selectedRating.includes("סינון") || series.rating == selectedRating;
 
+            // הפריט נשמר במערך המסונן רק אם הוא עומד בשני התנאים
             return genreMatch && ratingMatch;
         });
 
-        // הצגת הנתונים המסוננים
+        // קריאה לפונקציית הציור עם המערך המסונן
         renderSeries(filteredData);
     }
 
-    // האזנה לשינויים בבחירה
+    // הוספת מאזיני אירועים מסוג 'change' לשדות הבחירה, המפעילים את הסינון
     if (genreSelect) genreSelect.addEventListener('change', applyFilters);
     if (ratingSelect) ratingSelect.addEventListener('change', applyFilters);
 
-    // כפתור ניקוי סינונים
+    // טיפול בלחיצה על כפתור איפוס הסינונים
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
+            // החזרת ה-select לאינדקס 0 (אפשרות ברירת המחדל)
             genreSelect.selectedIndex = 0;
             ratingSelect.selectedIndex = 0;
-            renderSeries(seriesData); // הצגת הכל מחדש
+            // ציור הקטלוג מחדש עם כל הנתונים
+            renderSeries(seriesData); 
         });
     }
 }
 
-// מה קורה כשלוחצים על מידע נוסף
+// הפונקציה שמכינה ומציגה את נתוני הסדרה בחלון הקופץ (מודל)
 function showSeriesDetails(series) {
     const modal = document.getElementById('series-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-description');
-    const modalImage = document.getElementById('modal-image'); // תפסנו את התמונה
+    const modalImage = document.getElementById('modal-image');
     const closeBtn = document.getElementById('close-modal');
     
     if (!modal || !modalTitle || !modalDesc) return;
 
-    // מכניסים את הנתונים
+    // הזרקת המידע מתוך האובייקט לתוך אלמנטי ה-HTML של המודל
     modalTitle.innerText = series.title;
     modalDesc.innerText = series.description || "אין תקציר זמין לסדרה זו.";
     
-    // מכניסים את התמונה
     if (modalImage) {
+        // טיפול בתמונה: שימוש ב-placeholder אם ערך התמונה חסר
         modalImage.src = series.image || 'https://placehold.co/400x300?text=No+Image';
         modalImage.alt = series.title;
     }
     
-    // הצגת המודל
+    // שינוי הגדרות התצוגה ב-CSS של המודל כדי שיופיע במסך
     modal.classList.remove('hidden');
     modal.style.display = "block";
 
-    // סגירת המודל בלחיצה על ה-X
+    // הגדרת פעולת הסגירה על כפתור ה-X
     if (closeBtn) {
         closeBtn.onclick = () => {
             modal.classList.add('hidden');
@@ -302,7 +338,7 @@ function showSeriesDetails(series) {
         };
     }
 
-    // סגירת המודל בלחיצה מחוץ לחלון
+    // הגדרת פעולת סגירה נוספת עבור לחיצה מחוץ לתוכן המודל
     window.onclick = (e) => {
         if (e.target === modal) {
             modal.classList.add('hidden');
@@ -311,22 +347,25 @@ function showSeriesDetails(series) {
     };
 }
 
-// מאזין לחיצות גלובלי לקטלוג הסדרות)
+// איתור אלמנט הקטלוג הגלובלי להוספת האזנה (Delegation)
 const globalCatalogContainer = document.getElementById('series-catalog-container');
 if (globalCatalogContainer) {
+    // מאזין לכל לחיצה בתוך הקונטיינר
     globalCatalogContainer.addEventListener('click', (e) => {
-        // בודקים אם מה שלחצנו עליו מכיל את הקלאס של המידע נוסף
+        // בדיקה האם האלמנט שנלחץ ספציפית הוא כפתור "מידע נוסף"
         if (e.target.classList.contains('more-info-btn')) {
-            console.log("לחצו על כפתור!"); // בדיקה לקונסול
+            console.log("לחצו על כפתור!"); 
             
+            // שליפת המזהה (ID) שנשמר על גבי הכפתור
             const seriesId = e.target.getAttribute('data-id');
-            console.log("ID של הסדרה:", seriesId); // בדיקה לקונסול
+            console.log("ID של הסדרה:", seriesId); 
             
-            // חיפוש הסדרה במערך הנתונים הכללי
+            // שימוש בפונקציה find כדי למצוא את האובייקט במערך הראשי לפי ה-ID
             const selectedSeries = seriesData.find(s => s.id == seriesId);
             
             if (selectedSeries) {
-                showSeriesDetails(selectedSeries); // הפעלת המודל
+                // הפעלת הפונקציה להצגת המודל עם הנתונים שנמצאו
+                showSeriesDetails(selectedSeries); 
             } else {
                 console.error("לא הצלחתי למצוא את הסדרה עם ה-ID הזה במערך.");
             }
@@ -334,15 +373,15 @@ if (globalCatalogContainer) {
     });
 }
 
-// קריאה לפונקציה כשהדף נטען
+// קריאה לפונקציית הגדרת הסינונים מיד עם בניית עץ ה-DOM
 document.addEventListener('DOMContentLoaded', setupFilters);
 
-// הפעלת ההדר, החיפוש ופונקציית הסדרות
+// בלוק האתחול הראשי - מופעל עם סיום טעינת ה-HTML הראשוני
 document.addEventListener("DOMContentLoaded", async () => {
-    loadHeader();
-    await loadSeriesFromFirestore();
-    setupSearch(); 
-    setupAddSeriesForm();
-    setupModalClosing();
-    renderLatestSeries();
+    loadHeader(); // טעינת סרגל הניווט
+    await loadSeriesFromFirestore(); // המתנה למשיכת הנתונים מהענן
+    setupSearch();  // הגדרת החיפוש
+    setupAddSeriesForm(); // הגדרת טופס ההוספה
+    setupModalClosing(); // הגדרת סגירת המודל
+    renderLatestSeries(); // ציור הסדרה האחרונה (אם רלוונטי לדף)
 });
