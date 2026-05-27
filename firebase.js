@@ -2,8 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 // ייבוא הפונקציה שמאפשרת גישה למסד הנתונים (Firestore)
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-// ייבוא הפונקציה שמאפשרת גישה למערכת אימות המשתמשים
-import { getAuth } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+// ייבוא הפונקציה שמאפשרת גישה למערכת אימות ויצירת המשתמשים
+import { getAuth , GoogleAuthProvider} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 // הגדרת אובייקט עם כל פרטי ההתחברות והמזהים של הפרויקט ב-Firebase
 const firebaseConfig = {
@@ -23,3 +23,5 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 // יצירת חיבור למערכת המשתמשים וייצוא שלה לקבצים אחרים
 export const auth = getAuth(app);
+// יצירת מופע חדש של ספק ההתחברות של גוגל וייצוא שלו
+export const provider = new GoogleAuthProvider();

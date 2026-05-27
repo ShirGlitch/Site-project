@@ -1,7 +1,9 @@
-// ייבוא החיבורים למסד הנתונים ולמערכת האימות מהקובץ firebase.js
-import { db, auth } from './firebase.js';
+// ייבוא החיבורים למסד הנתונים ולמערכת האימות והמשתמשים מהקובץ firebase.js
+import { db, auth, provider } from './firebase.js';
 // ייבוא פונקציות ספציפיות מ-Firestore שדרושות לשליפה והוספה של נתונים
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+// ייבוא הפונקציה האחראית על פתיחת חלון התחברות קופץ עבור המשתמש מפייר בייס
+import { signInWithPopup } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js"; 
 
 function loadHeader() {
     // חילוץ שם הקובץ הנוכחי מהכתובת בדפדפן. אם ריק, ברירת המחדל היא index.html
@@ -384,4 +386,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupAddSeriesForm(); // הגדרת טופס ההוספה
     setupModalClosing(); // הגדרת סגירת המודל
     renderLatestSeries(); // ציור הסדרה האחרונה (אם רלוונטי לדף)
+    const googleLoginBtn = document.getElementById('google-login-btn');
+    if (googleLoginBtn){
+        googleLoginBtn.addEventListener('click', async () => {
+    // ניסיון ביצוע התחברות עם הגנה מפני שגיאות (כמו סגירת החלון על ידי המשתמש)
+    try {
+        // הפעלת חלון הפופ-אפ של גוגל והמתנה לקבלת פרטי המשתמש המאובטחים
+        const result = await signInWithPopup(auth, provider);
+        
+        // הדפסת הודעת הצלחה לקונסול יחד עם שם המשתמש שהתחבר
+        console.log("התחברות הצליחה עבור המשתמש:", result.user.displayName);
+        
+        // העברה אוטומטית של הדפדפן לדף הבית לאחר שהאימות הצליח
+        window.location.href = 'index.html';
+        
+    } catch (error) {
+        // תפיסת השגיאה במידה וההתחברות נכשלה או בוטלה, והדפסתה לקונסול לצרכי ניפוי שגיאות
+        console.error("שגיאה בתהליך ההתחברות:", error.message);
+    }
+}
 });
