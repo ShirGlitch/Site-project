@@ -3,12 +3,20 @@ import { db, auth, provider } from './firebase.js';
 // ייבוא פונקציות ספציפיות מ-Firestore שדרושות לשליפה והוספה של נתונים
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 // ייבוא הפונקציה האחראית על פתיחת חלון התחברות קופץ עבור המשתמש מפייר בייס
-import { signInWithPopup } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js"; 
+import { signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js"; 
 
-function loadHeader() {
+function loadHeader(user) {
     // חילוץ שם הקובץ הנוכחי מהכתובת בדפדפן. אם ריק, ברירת המחדל היא index.html
     const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
+    let connected;
+    if(user){ // אם המשתמש מחובר
+        connected = `<span>שלום, ${user.displayName}</span>
+        <button id="logout-btn" class="logout-link">התנתקות</button>`;
+    }
+    else{
+        connected = `<a href="login.html" class="login-link">התחברות / הרשמה</a>`;
+    }
     // שמירת כל מבנה ה-HTML של תפריט הניווט העליון (Header) בתוך משתנה טקסט
     const headerHTML = `
         <div class="header-left-part"> 
@@ -25,7 +33,7 @@ function loadHeader() {
         </nav>
             
         <div class="header-right-part">
-            <a href="login.html" class="login-link">התחברות / הרשמה</a>
+            ${connected}
         </div>
     `;
 
@@ -34,6 +42,21 @@ function loadHeader() {
     // אם האלמנט קיים בעמוד, הזרקת ה-HTML שנשמר במשתנה לתוכו
     if (headerElement) {
         headerElement.innerHTML = headerHTML;
+    }
+    // האזנה לכפתור ההתנתקות במידה והמשתמש מחובר
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn){
+        logoutBtn.addEventListener('click', async () => {
+            try{
+                await signOut(auth);
+                console.log("התנתקות הצליחה עבור המשתמש");
+            // רענון לעמוד לאחר התנתקות
+                window.location.href = 'index.html';
+            }
+            catch(error){
+                console.error("שגיאה בתהליך ההתנתקות:", error.message);
+            }
+        })
     }
 }
 
@@ -380,29 +403,44 @@ document.addEventListener('DOMContentLoaded', setupFilters);
 
 // בלוק האתחול הראשי - מופעל עם סיום טעינת ה-HTML הראשוני
 document.addEventListener("DOMContentLoaded", async () => {
-    loadHeader(); // טעינת סרגל הניווט
+    // מאזין של פיירבייס שבודק בכל טעינת דף האתר האם יש משתמש מחובר
+    onAuthStateChanged(auth, (user) => {
+        // קריאה מחדש לפונקציית ההדר ושליחת מצב המשתמש הנוכחי אליה
+        loadHeader(user); 
+        
+        if (user) { // בדיקה האם המשתמש מחובר
+            console.log("המערכת זיהתה משתמש מחובר:", user.displayName);
+        } else { // אם הוא לא מחובר
+            console.log("אין משתמש מחובר - הגולש הנוכחי הוא אורח");
+        }
+    });
     await loadSeriesFromFirestore(); // המתנה למשיכת הנתונים מהענן
     setupSearch();  // הגדרת החיפוש
     setupAddSeriesForm(); // הגדרת טופס ההוספה
     setupModalClosing(); // הגדרת סגירת המודל
     renderLatestSeries(); // ציור הסדרה האחרונה (אם רלוונטי לדף)
+    // איתור כפתור ההתחברות של גוגל
     const googleLoginBtn = document.getElementById('google-login-btn');
-    if (googleLoginBtn){
+    
+    // בדיקה האם כפתור ההתחברות של גוגל קיים בדף הנוכחי
+    if (googleLoginBtn) {
+        // הצמדת מאזין לחיצה אסינכרוני אל הכפתור
         googleLoginBtn.addEventListener('click', async () => {
-    // ניסיון ביצוע התחברות עם הגנה מפני שגיאות (כמו סגירת החלון על ידי המשתמש)
-    try {
-        // הפעלת חלון הפופ-אפ של גוגל והמתנה לקבלת פרטי המשתמש המאובטחים
-        const result = await signInWithPopup(auth, provider);
-        
-        // הדפסת הודעת הצלחה לקונסול יחד עם שם המשתמש שהתחבר
-        console.log("התחברות הצליחה עבור המשתמש:", result.user.displayName);
-        
-        // העברה אוטומטית של הדפדפן לדף הבית לאחר שהאימות הצליח
-        window.location.href = 'index.html';
-        
-    } catch (error) {
-        // תפיסת השגיאה במידה וההתחברות נכשלה או בוטלה, והדפסתה לקונסול לצרכי ניפוי שגיאות
-        console.error("שגיאה בתהליך ההתחברות:", error.message);
-    }
-}
-});
+            // ניסיון ביצוע התחברות עם הגנה מפני שגיאות (כמו סגירת החלון על ידי המשתמש)
+            try {
+                // הפעלת חלון הפופ-אפ של גוגל והמתנה לקבלת פרטי המשתמש המאובטחים
+                const result = await signInWithPopup(auth, provider);
+                
+                // הדפסת הודעת הצלחה לקונסול יחד עם שם המשתמש שהתחבר
+                console.log("התחברות הצליחה עבור המשתמש:", result.user.displayName);
+                
+                // העברה אוטומטית של הדפדפן לדף הבית לאחר שהאימות הצליח
+                window.location.href = 'index.html';
+                
+            } catch (error) {
+                // תפיסת השגיאה במידה וההתחברות נכשלה או בוטלה, והדפדפן לא יתרסק
+                console.error("שגיאה בתהליך ההתחברות:", error.message);
+            }
+        }); // סגירת ה-addEventListener והפונקציה האסינכרונית שלו
+    } // סגירת תנאי ה-if
+}); // סגירת בלוק האתחול הראשי (DOMContentLoaded)
