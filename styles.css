@@ -22,7 +22,7 @@ header {
     z-index: 1000;
 }
 
-.header-left-part, .header-right-part {
+.header-left-part{
     flex: 1;
 }
 
@@ -89,6 +89,35 @@ header div a[href="login.html"] {
 
 header div a[href="login.html"]:hover {
     background-color: #D96C4A;
+}
+
+.header-right-part{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-name{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #D96C4A;
+}
+
+.logout-link{
+    font-size: 1rem;
+    color: #ffffff; 
+    background-color:  rgb(244, 150, 116);
+    padding: 8px 18px; 
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.logout-link:hover{
+    background-color: #D96C4A; 
 }
 
 /* עיצוב התוכן המרכזי */
