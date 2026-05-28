@@ -11,7 +11,7 @@ function loadHeader(user) {
 
     let connected;
     if(user){ // אם המשתמש מחובר
-        connected = `<span>שלום, ${user.displayName}</span>
+        connected = `<span class="user-name">שלום, ${user.displayName}</span>
         <button id="logout-btn" class="logout-link">התנתקות</button>`;
     }
     else{
@@ -100,6 +100,29 @@ function setupAddSeriesForm() {
     addForm.addEventListener('submit', async (event) => {
         // עצירת התנהגות ברירת המחדל של הדפדפן (מונעת רענון של העמוד)
         event.preventDefault();
+        
+        // בדיקה האם המשתמש הנוכחי אינו מחובר למערכת
+        if (!auth.currentUser) {
+            // איסוף הנתונים שהאורח כבר הספיק למלא בשדות
+            const pendingData = {
+                title: document.getElementById('title').value,
+                image: document.getElementById('images').value,
+                genre: document.getElementById('genre').value,
+                description: document.getElementById('description').value,
+            };
+            // שמירת האובייקט בזיכרון של הדפדפן
+            localStorage.setItem('pendingSeries', JSON.stringify(pendingData));
+
+            // שאלת המשתמש האם לעבור להתחבר
+            const goToLogin = confirm("אופס! כדי להוסיף סדרה לקטלוג עליך להיות מחובר. הנתונים שלך נשמרו, האם לעבור לדף ההתחברות?");
+
+            // אם המשתמש לחץ על אישור
+            if (goToLogin) {
+                window.location.href = 'login.html'; // העברה לדף ההתחברות
+            }
+            
+            return; // עצירת המשך הפונקציה בכל מקרה, כדי שהטופס לא יישלח לפייר בייס
+        }
 
         // משיכת הערכים שהוזנו בשדות הטופס
         const title = document.getElementById('title').value;
@@ -410,10 +433,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         
         if (user) { // בדיקה האם המשתמש מחובר
             console.log("המערכת זיהתה משתמש מחובר:", user.displayName);
+
+            // בדיקה האם יש משהו שמור בזכרון הדפדפן!
+            if (localStorage.getItem('pendingSeries')) {
+                // שמירת מה שיש בזכרון הדפדפן בתור משתנה שרשרת
+                const savedData = JSON.parse(localStorage.getItem('pendingSeries'));
+                
+                // הגדרת השדות בהתאם למה שנשמר
+                document.getElementById('title').value = savedData.title;
+                document.getElementById('images').value = savedData.image; // תואם למה ששמרת בטופס
+                document.getElementById('genre').value = savedData.genre;
+                document.getElementById('description').value = savedData.description; // תיקון ה-s המיותרת
+                
+                // מחיקת המידע מזכרון האתר
+                localStorage.removeItem('pendingSeries');
+            }
+
         } else { // אם הוא לא מחובר
             console.log("אין משתמש מחובר - הגולש הנוכחי הוא אורח");
         }
-    });
+    }); 
     await loadSeriesFromFirestore(); // המתנה למשיכת הנתונים מהענן
     setupSearch();  // הגדרת החיפוש
     setupAddSeriesForm(); // הגדרת טופס ההוספה
