@@ -248,6 +248,29 @@ main {
 #home-page #series-catalog-container.show-results {
     display: grid !important; /* ה-important מבטיח שה-JS ינצח כל הגדרה אחרת */
 }
+
+
+/* עיצוב למידע נוסף*/
+.more-info-btn {
+    background-color: rgb(231, 137, 102);
+    color: #FFFFFF;
+    padding: 5px 15px;
+    border-radius: 50px;
+    cursor: pointer; 
+    box-shadow: 0 4px 10px rgba(217, 108, 74, 0.3);
+    transition: all 0.3s ease; 
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 10px auto 5px;
+    width: fit-content;
+    display: block;
+}
+
+.more-info-btn:hover {
+    background-color:  #D96C4A;
+}
+
 /* =========================================
    אזור המלצה אחרונה שנוספה
 ========================================= */
@@ -403,6 +426,7 @@ main {
     color: #a08d82;
     font-size: 0.85rem;
 }
+
 /* =========================================
    אזור הוספת סדרה
 ========================================= */

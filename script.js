@@ -236,8 +236,12 @@ function renderSeries(data) {
                 <img src="${series.image || 'https://placehold.co/200x300'}" alt="${series.title}">
                 <h3>${series.title}</h3>
                 <div class="rating-display">⭐ ${series.rating}/5</div>
-                <h4 class="more-info-btn" data-id="${series.id}">למידע נוסף</h4>
-            </div>
+                <h4 class="more-info-btn" 
+                data-title="${series.title}" 
+                data-description="${series.description}" 
+                data-image="${series.image || ''}">
+                למידע נוסף
+                </h4>
         `;
         // שרשור ה-HTML שנוצר לתוך הקונטיינר
         container.innerHTML += cardHTML;
@@ -275,10 +279,37 @@ function renderLatestSeries() {
         <img src="${latestSeries.image || 'https://placehold.co/150x100'}" alt="${latestSeries.title}" width="150"> 
         <h3>${latestSeries.title}</h3>
         <p>ז'אנר: <strong>${latestSeries.genre || 'כללי'}</strong></p> 
-        <a href="javascript:void(0)" class="more-info-btn" data-id="${latestSeries.id}">למידע נוסף</a>
+        <h4 class="more-info-btn" 
+        data-title="${latestSeries.title}" 
+        data-description="${latestSeries.description}" 
+        data-image="${latestSeries.image || ''}">
+        למידע נוסף
+        </h4>
     `;
 }
-
+// פתיחת המודל
+function setupModalOpening() {
+    document.body.addEventListener('click', (e) => {
+        if (e.target.classList.contains('more-info-btn')) {
+            console.log("לחצו על כפתור מידע נוסף!");
+            
+            // שליפת המידע המאוחסן ישירות מהתגיות של הכפתור
+            const title = e.target.getAttribute('data-title');
+            const description = e.target.getAttribute('data-description');
+            const image = e.target.getAttribute('data-image');
+            
+            // עדכון הנתונים בתוך המודל
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-description').textContent = description;
+            document.getElementById('modal-image').src = image || 'https://via.placeholder.com/150';
+            
+            // הצגת המודל
+            const modal = document.getElementById('series-modal');
+            modal.classList.remove('hidden');
+            modal.style.display = 'block';
+        }
+    });
+}
 // פונקציה לטיפול באירועי סגירת המודל (Pop-up)
 function setupModalClosing() {
     const closeModal = document.getElementById('close-modal');
@@ -456,6 +487,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadSeriesFromFirestore(); // המתנה למשיכת הנתונים מהענן
     setupSearch();  // הגדרת החיפוש
     setupAddSeriesForm(); // הגדרת טופס ההוספה
+    setupModalOpening(); // פתיחת המודל
     setupModalClosing(); // הגדרת סגירת המודל
     renderLatestSeries(); // ציור הסדרה האחרונה (אם רלוונטי לדף)
     // איתור כפתור ההתחברות של גוגל
